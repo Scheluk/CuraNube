@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__, template_folder="../templates")
 
@@ -7,12 +7,12 @@ app = Flask(__name__, template_folder="../templates")
 
 #GET Request
 @app.route("/")
-def root():
+def index():
     return render_template("index.html")
 
 @app.route("/about")
 def about():
-    return "About"
+    return render_template("about.html")
 
 #POST Request
 
