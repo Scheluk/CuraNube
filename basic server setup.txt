@@ -1,0 +1,13 @@
+install/upgrade pip
+install virtualenv	pip install virtualenv
+create virtual enviroment in project	virtualenv virtual
+allow script execution in visual studio code: im terminal "Set-ExecutionPolicy -Scope CurrentUser Unrestricted" eingeben
+test activating the virtual env:	.\virtual\Scripts\activate
+("deactivate" to leave)
+install flask in virtual env:	pip install flask
+
+test the python file:
+activate virtual env
+start python script:	py ./python/main.py
+if it starts, great!
+
