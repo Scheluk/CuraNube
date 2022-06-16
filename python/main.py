@@ -1,7 +1,7 @@
 from copyreg import constructor
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 
-app = Flask(__name__, template_folder="../templates")
+app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 database = [
     {"username":"admin","email":"","id":"0000","psw":"admin"},
@@ -9,12 +9,17 @@ database = [
     {"username":"temp2","email":"","id":"0002","psw":"0000"}
 ]
 
+
+
+
 #REST API
 
 
 #GET Request
 @app.get("/")
 def index():
+    print(app.root_path)
+    print(app.static_url_path)
     return render_template("index.html")
 
 @app.get("/about")
