@@ -11,3 +11,5 @@ activate virtual env
 start python script:	py ./python/main.py
 if it starts, great!
 
+Zum Starten Bei Curt:
+e TAB s TAB a TAB
