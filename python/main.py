@@ -1,15 +1,14 @@
 from copyreg import constructor
+import json
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 database = [
-    {"username":"admin","email":"","id":"0000","psw":"admin"},
-    {"username":"temp1","email":"","id":"0001","psw":"0000"},
-    {"username":"temp2","email":"","id":"0002","psw":"0000"}
+    {"username":"admin","email":"admin@gmail.com","id":"0000","pw":"admin"},
+    {"username":"temp1","email":"","id":"0001","pw":"0000"},
+    {"username":"temp2","email":"","id":"0002","pw":"0000"}
 ]
-
-
 
 
 #REST API
@@ -18,8 +17,6 @@ database = [
 #GET Request
 @app.get("/")
 def index():
-    print(app.root_path)
-    print(app.static_url_path)
     return render_template("index.html")
 
 @app.get("/about")
@@ -39,8 +36,8 @@ def user():
             return jsonify({"user":notfound})
 
 #POST Request
-@app.post("/user/register")
-def create_user():
+@app.post("/register")
+def register():
     print("hit endpoint: msg")
 
 
@@ -55,24 +52,60 @@ def delete_user():
     print("hit endpoint: msg")
 
 
+
+
+
+
 ### --- login routes --- ###
 
-@app.route("/success/<name>")
-def success(name):
-    return "welcome %s" %name
+@app.route("/home/<username>")
+def home(username):
+    return render_template("home.html", username = username)
+
 
 #LOGIN
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    print("hit endpoint: login")
-    if request.method == "POST":
-        user = request.form["username"]
-        print(request.form["password"])
-        return redirect(url_for("success", name = user))
-    else:
-        user = request.args.get("username")
-        #return redirect(url_for("success", name = user))
-    return render_template("login.html")
+    error = ""  #error message that shows up on incorrect login
+    if request.method == "POST":    #if POST, do the login
+        #convert the form data to json response, and then to json data
+        userjson = jsonify(
+            credentials=request.form["username"],
+            pw=request.form["password"]
+        ).get_json() 
+        print(userjson)
+        if valid_login(userjson):   #check if the login is valid
+            print("Valid Login")
+            error=""
+            return redirect(url_for("home", username = userjson["credentials"]))
+        else:
+            error = "Invalid username/password"
+    return render_template("login.html", error=error)    #show the login form
+
+
+#LOGOUT
+@app.route("/logout")
+def logout():
+    return render_template("index.html")
+
+
+def valid_login(userjson):  #check if login is valid
+    for user in database:
+        if userjson["credentials"] == user["username"] or userjson["credentials"] == user["email"]:   #if user with that username or email exists
+            if userjson["pw"] == user["pw"]:    #if password is correct
+                return True
+            else:
+                print("DEBUG: wrong password")
+                return False
+        else:
+            print("DEBUG: wrong username, user doesn't exist")
+            return False
+    print("ERROR, user database is empty")
+    return False
+
+
+
+
 
 
 
@@ -85,6 +118,10 @@ def fileshare():
 @app.post("/upload")
 def upload_file():
     return jsonify({"user":"your file was uploaded"})
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
