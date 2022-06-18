@@ -58,7 +58,7 @@ def delete_user():
 
 ### --- login routes --- ###
 
-@app.route("/home/<username>")
+@app.route("/<username>/home")
 def home(username):
     return render_template("home.html", username = username)
 
@@ -86,7 +86,7 @@ def login():
 #LOGOUT
 @app.route("/logout")
 def logout():
-    return render_template("index.html")
+    return redirect(url_for("index"))
 
 
 def valid_login(userjson):  #check if login is valid
