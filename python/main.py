@@ -5,9 +5,7 @@ from flask import Flask, jsonify, redirect, render_template, request, url_for
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 database = [
-    {"username":"admin","email":"admin@gmail.com","id":"0000","pw":"admin"},
-    {"username":"temp1","email":"","id":"0001","pw":"0000"},
-    {"username":"temp2","email":"","id":"0002","pw":"0000"}
+    {"username":"admin","email":"admin@gmail.com","id":"1","pw":"admin"}
 ]
 
 
@@ -23,13 +21,7 @@ def index():
 def about():
     return render_template("about.html")
 
-@app.get("/accountcreated")
-def accountcreated():
-    return render_template("accountcreated.html")
 
-@app.get("/createaccount")
-def createaccount():
-    return render_template("createaccount.html")
 
 @app.get("/user")
 def user():
@@ -44,9 +36,7 @@ def user():
             return jsonify({"user":notfound})
 
 #POST Request
-@app.post("/register")
-def register():
-    print("hit endpoint: msg")
+
 
 
 #PATCH Request
@@ -68,7 +58,7 @@ def delete_user():
 
 @app.route("/<username>/home")
 def home(username):
-    return render_template("home.html", username = username)
+    return render_template("userspace_home.html", username = username)
 
 
 #LOGIN
@@ -105,16 +95,64 @@ def valid_login(userjson):  #check if login is valid
             else:
                 print("DEBUG: wrong password")
                 return False
-        else:
-            print("DEBUG: wrong username, user doesn't exist")
-            return False
-    print("ERROR, user database is empty")
+    print("DEBUG: wrong username, user doesn't exist")
     return False
 
 
 
 
+### --- User Creation Routes --- ###
+@app.route("/accountcreated")
+def accountcreated():
+    return render_template("accountcreated.html")
 
+
+@app.route("/createaccount", methods=["POST", "GET"])
+def createaccount():
+    error = ""  #error message that shows up on incorrect login
+    print(error)
+    if request.method == "POST":    #if POST, do the login
+        #convert the form data to json response, and then to json data
+        userjson = jsonify(
+            email=request.form["email"],
+            username=request.form["username"],
+            pw=request.form["password"]
+        ).get_json() 
+        print(userjson)
+        match valid_accountcreation(userjson):   #check if the login is valid
+            case 0:
+                print("Valid New Account")
+                add_user(userjson)
+                return redirect(url_for("accountcreated"))
+            case 1:
+                error = "Username already taken"
+            case 2:
+                error = "E-Mail already taken"
+    return render_template("createaccount.html", error = error)
+
+
+
+def valid_accountcreation(userjson):
+    for user in database:
+        if userjson["username"] == user["username"]:
+            print("DEBUG: User with that username already exists")
+            return 1
+        if userjson["email"] == user["email"]:
+            print("DEBUG: User with that email already exists")
+            return 2
+    return 0
+
+def add_user(userjson):
+    #newUserId = database.__len__ + 1
+    database.append({
+        "username":userjson["username"],
+        "email":userjson["email"],
+        "pw":userjson["pw"],
+        "id":str(len(database)+1)
+    })
+    print(database)
+    #for user in database:
+     #   print(user)
 
 
 ### --- Fileshare --- ###

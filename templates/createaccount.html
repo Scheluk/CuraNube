@@ -17,21 +17,28 @@
 
 <div class="mcontainer">
   
+  <form action="{{ url_for('createaccount') }}" method="post">
+    {{error}}
     <div class="form-field">
-        <label for="username">Username</label>
-        <input id="form-field" name="username" type="text" required>
+      <label for="email">E-Mail</label>
+      <input id="form-field" name="email" type="email" required>
+    </div>  
+    <div class="form-field">
+      <label for="username">Username</label>
+      <input id="form-field" name="username" type="text" required>
     </div>
-        <div class="form-field">
-        <label for="password">Password</label>
-        <input id="form-field" name="password" type="text" required>
+      <div class="form-field">
+      <label for="password">Password</label>
+      <input id="form-field" name="password" type="password" required>
     </div>
+    <div class="form-field">
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+  
 
   <form action="{{ url_for('index') }}">
     <button type="submit">Home</button>
-  </form>
-
-  <form action="{{ url_for('accountcreated') }}">
-    <button type="submit">Submit</button>
   </form>
   
 </div>
