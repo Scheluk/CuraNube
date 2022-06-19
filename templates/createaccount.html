@@ -1,0 +1,40 @@
+{% extends "template.html" %}
+
+{% block headercontent %}
+
+
+<div>
+  <h1>Account Creation</h1>
+  <p>Please enter a valid E-Mail
+    address and a password for
+    the creation of your account.</p>
+</div>
+
+
+{% endblock %}
+
+{% block maincontent %}
+
+<div class="mcontainer">
+  
+    <div class="form-field">
+        <label for="username">Username</label>
+        <input id="form-field" name="username" type="text" required>
+    </div>
+        <div class="form-field">
+        <label for="password">Password</label>
+        <input id="form-field" name="password" type="text" required>
+    </div>
+
+  <form action="{{ url_for('index') }}">
+    <button type="submit">Home</button>
+  </form>
+
+  <form action="{{ url_for('accountcreated') }}">
+    <button type="submit">Submit</button>
+  </form>
+  
+</div>
+
+
+{% endblock %}

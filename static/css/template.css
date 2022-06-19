@@ -11,6 +11,14 @@ main {
     background-color: skyblue;
 }
 
+button {
+    background-color: white;
+    font-size: 16px;
+    color: rgb(126, 164, 245);
+    padding: 12px 28px;
+    border-radius: 12px;
+}
+
 
 #logoimage {
     display: block;

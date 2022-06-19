@@ -31,9 +31,14 @@
 </div>
 
 <div class="mcontainer">
-         
-    <a href="{{ url_for('index') }}"><input type="button" value="Home" id="indexbutton"></a>
      
+    <form action="{{ url_for('index') }}">
+        <button type="submit">Home</button>
+    </form>
+    
+    <!-- 
+    <a href="{{ url_for('index') }}"><input type="button" value="Home" id="indexbutton"></a>
+    -->
   </div>
 
 {% endblock %}

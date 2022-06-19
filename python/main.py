@@ -23,6 +23,14 @@ def index():
 def about():
     return render_template("about.html")
 
+@app.get("/accountcreated")
+def accountcreated():
+    return render_template("accountcreated.html")
+
+@app.get("/createaccount")
+def createaccount():
+    return render_template("createaccount.html")
+
 @app.get("/user")
 def user():
     print("hit endpoint: user")

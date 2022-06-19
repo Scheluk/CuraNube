@@ -19,3 +19,10 @@ function getMessage() {
     const formData = new FormData(e.target)
     const formProps = Object
 }*/
+
+
+
+/* Button Area */
+
+var home = document.getElementById("home");
+

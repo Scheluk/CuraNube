@@ -13,11 +13,24 @@
 
 <div>
   <div class="mcontainer">
-  
-            <a href="{{ url_for('login') }}"><input type="button" value="Login" id="loginbutton"></a> <br>
-            <a href="{{ url_for('login') }}"><input type="button" value="Create Account" id="createaccountbutton"></a> <br> <!-- Hier gehört der Pfad noch weg vom Login hin zu unserer Create account page-->
-            <a href="{{ url_for('about') }}"><input type="button" value="About" id="aboutbutton"></a>
      
+    <form action="{{ url_for('login') }}">
+        <button type="submit">Login</button>
+      </form>
+  
+      <form action="{{ url_for('createaccount') }}">
+        <button type="submit">Create Account</button>
+      </form>
+
+      <form action="{{ url_for('about') }}">
+        <button type="submit">About</button>
+      </form>
+
+  <!--
+            <a href="{{ url_for('login') }}"><input type="button" value="Login" id="loginbutton"></a> <br>
+            <a href="{{ url_for('login') }}"><input type="button" value="Create Account" id="createaccountbutton"></a> <br> 
+            <a href="{{ url_for('about') }}"><input type="button" value="About" id="aboutbutton"></a>
+  -->   
   </div>
    <p>Just buttons</p>
 </div>
