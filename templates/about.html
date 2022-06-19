@@ -1,10 +1,36 @@
 {% extends "template.html" %}
-{% block content %}
+
+{% block headercontent %}
 
 
 <div>
   <h1>About</h1>
-  <p>blablabla</p>
+  <p>Teh students choice of file sharing</p>
+</div>
+
+
+{% endblock %}
+
+
+
+{% block maincontent %}
+
+
+<div>
+   <p>CuraNube is a file sharing Service
+    build for the needs of students. We
+    provide you the best file sharing
+    experience with servers located in
+    your country and the best safety
+    solutions available to keep your
+    files safe!</p>
+</div>
+
+<div class="mcontainer">
+  
+  <a href="{{ url_for('index') }}"><input type="button" value="Nice!" id="nicebutton"></a> <br>
+  <a href="{{ url_for('login') }}"><input type="button" value="Create Account" id="createaccountbutton"></a>
+  
 </div>
 
 

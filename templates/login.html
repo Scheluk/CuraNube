@@ -1,5 +1,14 @@
 {% extends "template.html" %}
-{% block content %}
+
+{% block headercontent %}
+
+<div>
+  <h1>Please Login</h1>
+  <p>User your Login Data to login.</p>
+</div>
+
+{% endblock %}
+{% block maincontent %}
 
 <div>
     <form action="http://127.0.0.1:5000/login" method="post">
@@ -20,5 +29,11 @@
         </div>
     </form>
 </div>
+
+<div class="mcontainer">
+         
+    <a href="{{ url_for('index') }}"><input type="button" value="Home" id="indexbutton"></a>
+     
+  </div>
 
 {% endblock %}

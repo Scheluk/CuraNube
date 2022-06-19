@@ -1,3 +1,67 @@
+header {
+    background-color: white;
+}
+
 html {
     background-color: skyblue;
+    text-align: center;
+}
+
+main {
+    background-color: skyblue;
+}
+
+
+#logoimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    height: 5%;
+    width: 10%;
+}
+
+.logo {
+    text-align: center;
+}
+
+
+body {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr; 
+    grid-template-rows: 0.5fr 1.5fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+    "c1"
+    "c2";    
+    height: 100%;
+    width: 100%;
+    }
+
+@media  screen and (max-width: 500px) {
+    body {
+        font-size: 80%;
+    }
+        
+    header {
+        grid-area: c1;         
+    }
+    
+    main {
+        grid-area: c2;
+    }
+ 
+}
+
+@media  screen and (min-width: 501px) {
+           
+    header {
+        grid-area: c1;         
+    }
+    
+    main {
+        grid-area: c2;
+    }
+ 
 }
