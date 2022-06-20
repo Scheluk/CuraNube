@@ -6,9 +6,9 @@ from flask import Flask, jsonify, redirect, render_template, request, url_for
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 database = [
-    {"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin"},
-    {"username":"temp1","email":"t1@gmail.com","id":2,"pw":"admin"},
-    {"username":"temp2","email":"t2@gmail.com","id":4,"pw":"admin"}
+    {"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin","verified":True},
+    {"username":"temp1","email":"t1@gmail.com","id":2,"pw":"admin","verified":False},
+    {"username":"temp2","email":"t2@gmail.com","id":4,"pw":"admin","verified":True}
 ]
 
 
@@ -93,7 +93,7 @@ def logout():
 def valid_login(userjson):  #check if login is valid
     for user in database:
         if userjson["credentials"] == user["username"] or userjson["credentials"] == user["email"]:   #if user with that username or email exists
-            if userjson["pw"] == user["pw"]:    #if password is correct
+            if userjson["pw"] == user["pw"] and user["verified"]:    #if password is correct and user is verified
                 return True
             else:
                 print("DEBUG: wrong password")
@@ -150,7 +150,8 @@ def add_user(userjson):
         "username":userjson["username"],
         "email":userjson["email"],
         "pw":userjson["pw"],
-        "id":freeUserId()
+        "id":freeUserId(),
+        "verified":False
     })
     print(database)
 
