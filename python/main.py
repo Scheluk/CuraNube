@@ -53,10 +53,6 @@ def delete_user():
     print("hit endpoint: msg")
 
 
-
-
-
-
 ### --- login routes --- ###
 
 @app.route("/<username>/home")

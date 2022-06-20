@@ -20,12 +20,15 @@ button {
     border-radius: 12px;
     transition-duration: 0.5s;
 }
-button:hover { background-color: burlywood;}
+button:hover { 
+    background-color: rgb(5, 203, 238);
+    color: white;
+}
 
 button:active {
     background-color: aqua;
-    box-shadow: 0 10px blue;
-    transform: translate(100px);
+    box-shadow: 0 10% rgb(62, 62, 206);
+    transform: translate(1%);
 }
 
 

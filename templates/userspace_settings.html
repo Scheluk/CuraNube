@@ -11,17 +11,16 @@
 
 <div class="mcontainer">
     <form action="{{ url_for('') }}">               <!--Insert rigth link-->
-        <button type="submit">My Library</button>
+        <button type="submit">Change Picture</button>
     </form>
 
-    <form action="{{ url_for('') }}">               <!--Insert rigth link-->
+    <form action="{{ url_for('index') }}">          <!--Insert rigth link-->     
         <button type="submit">My Account</button>
     </form>
 
-    <form action="{{ url_for('index') }}">               
-        <button type="submit">Logout</button>
-        </form>
+    <form action="{{ url_for('') }}">               <!--Insert rigth link-->           
+        <button type="submit">Home</button>
+    </form>
 </div>
-    
 
 {% endblock %}

@@ -22,7 +22,5 @@ function getMessage() {
 
 
 
-/* Button Area */
 
-var home = document.getElementById("home");
 

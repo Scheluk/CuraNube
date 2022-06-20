@@ -7,21 +7,24 @@
   </head>
   <body>
       <header>
-          <div class="container">
-            <h1 class="logo">CuraNube</h1>
-            <strong><nav>
-                <ul class="menu">
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('about') }}">About</a></li>
-                    <a href="{{ url_for('logout') }}"><input type="button" value="Log Out" id="logoutbutton"></a>
-                </ul>
-            </nav>
-            </strong>
-          </div>
+                 
+        <div class="hcontainer">
+          <img id="logoimage" src="https://images.unsplash.com/photo-1504253163759-c23fccaebb55?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Cloud Logo">
+        </div>
+
+        {% block headercontent %}
+        {% endblock %}  
+
       </header>
 
-      {% block content %}
+    <main>
+    
+      <!--Insert REST API Clock-->
+      {% block maincontent %}
       {% endblock %}
+
+    </main>
+
 
   </body>
 </html>
