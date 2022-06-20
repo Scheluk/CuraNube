@@ -6,12 +6,16 @@ test activating the virtual env:	.\virtual\Scripts\activate
 ("deactivate" to leave)
 install flask in virtual env:	pip install flask
 
-test the python file:
+init of server:
 activate virtual env
-start python script:	py ./flaskr/python/main.py
+1. $env:FLASK_APP = "Curanube"
+2. $env:FLASK_ENV = "virtual"     //oder wie ihr euer virtual environment auch immer benannt habt
+3. $env:FLASK_DEBUG = 1
+start flask server:	    flask run
 if it starts, great!
 
-Zum Starten Bei Curt:
+
+Zum Starten Bei Curt:       //FÄLLT DANN WEG
 e TAB s TAB a TAB
 
 

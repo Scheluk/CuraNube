@@ -4,8 +4,6 @@ from Curanube import app
 import sqlite3
 
 
-
-
 database = [
     {"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin","verified":True},
     {"username":"temp1","email":"t1@gmail.com","id":2,"pw":"admin","verified":False},
@@ -15,10 +13,8 @@ database = [
 
 
 
-
-
 #GET Request
-@app.route("/")
+@app.route("/") 
 def index():
     return render_template("index.html")
 

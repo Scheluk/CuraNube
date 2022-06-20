@@ -1,3 +1,3 @@
-graft curanube/templates
-graft curanube/static
-include curanube/db.sql
+graft Curanube/templates
+graft Curanube/static
+include Curanube/db.sql
