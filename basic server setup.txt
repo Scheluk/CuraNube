@@ -8,8 +8,14 @@ install flask in virtual env:	pip install flask
 
 test the python file:
 activate virtual env
-start python script:	py ./python/main.py
+start python script:	py ./flaskr/python/main.py
 if it starts, great!
 
 Zum Starten Bei Curt:
 e TAB s TAB a TAB
+
+
+further plugins:
+pip install flask-sqlalchemy
+pip install datetime
+pip install flask-admin

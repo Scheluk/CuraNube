@@ -1,9 +1,10 @@
-from copyreg import constructor
-import json
 from operator import itemgetter
 from flask import Flask, jsonify, redirect, render_template, request, url_for
+from Curanube import app
+import sqlite3
 
-app = Flask(__name__, template_folder="../templates", static_folder="../static")
+
+
 
 database = [
     {"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin","verified":True},
@@ -12,21 +13,22 @@ database = [
 ]
 
 
-#REST API
+
+
 
 
 #GET Request
-@app.get("/")
+@app.route("/")
 def index():
     return render_template("index.html")
 
-@app.get("/about")
+@app.route("/about")
 def about():
     return render_template("about.html")
 
 
 
-@app.get("/user")
+@app.route("/user")
 def user():
     print("hit endpoint: user")
     username = request.args["user"]
@@ -154,7 +156,7 @@ def add_user(userjson):
 
 #function to dynamically assign user ids
 def freeUserId():
-    last_index = max(database, key=itemgetter("id"))["id"]    #search for biggest user id
+    last_index = max(database, key=itemgetter("id"))["id"] if len(database) != 0 else 1   #search for biggest user id
     for i in range(1, int(last_index)):      #from 1 to the biggest user id
         #check if the id is already taken
         for user in database:
@@ -165,6 +167,10 @@ def freeUserId():
         if(not idExists):   #if not, return it
             return i
     return last_index+1     #if every id in the range is taken, return the biggest+1
+
+
+
+
 
 ### --- Fileshare --- ###
 @app.get("/fileshare")
