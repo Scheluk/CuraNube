@@ -11,7 +11,7 @@
 {% block maincontent %}
 
 <div>
-    <form action="http://127.0.0.1:5000/login" method="post">
+    <form action="http://127.0.0.1:5000/auth/login" method="post">
         <div><p>{{error}}</p></div>
         <div class="form-field">
             <label for="username">Username</label>
@@ -25,20 +25,20 @@
             <input id="form-field" type="submit" value="submit">
         </div>
         <div>
-            <a href="{{ url_for('createaccount') }}">Create an Account</a>
+            <a href="{{ url_for('auth.createaccount') }}">Create an Account</a>
         </div>
     </form>
 </div>
 
 <div class="mcontainer">
      
-    <form action="{{ url_for('index') }}">
+    <form action="{{ url_for('root.index') }}">
         <p></p>
         <button type="submit">Home</button>
     </form>
     
     <!-- 
-    <a href="{{ url_for('index') }}"><input type="button" value="Home" id="indexbutton"></a>
+    <a href="{{ url_for('root.index') }}"><input type="button" value="Home" id="indexbutton"></a>
     -->
   </div>
 

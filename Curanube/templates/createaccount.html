@@ -17,7 +17,7 @@
 
 <div class="mcontainer">
   
-  <form action="{{ url_for('createaccount') }}" method="post">
+  <form action="{{ url_for('auth.createaccount') }}" method="post">
     {{error}}
     <div class="form-field">
       <label for="email">E-Mail</label>
@@ -38,7 +38,7 @@
   </form>
   
 
-  <form action="{{ url_for('index') }}">
+  <form action="{{ url_for('root.index') }}">
     <p></p>
     <button type="submit">Home</button>
   </form>

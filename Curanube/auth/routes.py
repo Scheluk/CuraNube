@@ -1,65 +1,13 @@
+from Curanube.auth import bp
+from Curanube.db import database
 from operator import itemgetter
-from flask import Flask, jsonify, redirect, render_template, request, url_for
-from Curanube import app
-import sqlite3
-
-
-database = [
-    {"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin","verified":True},
-    {"username":"temp1","email":"t1@gmail.com","id":2,"pw":"admin","verified":False},
-    {"username":"temp2","email":"t2@gmail.com","id":4,"pw":"admin","verified":True}
-]
-
-
-
-
-#GET Request
-@app.route("/") 
-def index():
-    return render_template("index.html")
-
-@app.route("/about")
-def about():
-    return render_template("about.html")
-
-
-
-@app.route("/user")
-def user():
-    print("hit endpoint: user")
-    username = request.args["user"]
-
-    for user in database:
-        if user["username"] == username:
-            return jsonify(user)
-        else:
-            notfound = "%s not found in system!" %(username)
-            return jsonify({"user":notfound})
-
-#POST Request
-
-
-
-#PATCH Request
-@app.patch("/user/update")
-def update_user():
-    print("hit endpoint: msg")
-
-#DELETE Request
-@app.delete("/user/delete")
-def delete_user():
-    print("hit endpoint: msg")
-
+from flask import redirect, url_for, render_template, request, jsonify
 
 ### --- login routes --- ###
 
-@app.route("/<username>/home")
-def home(username):
-    return render_template("userspace_home.html", username = username)
-
 
 #LOGIN
-@app.route("/login", methods=["POST", "GET"])
+@bp.route("/login", methods=["POST", "GET"])
 def login():
     error = ""  #error message that shows up on incorrect login
     if request.method == "POST":    #if POST, do the login
@@ -72,16 +20,16 @@ def login():
         if valid_login(userjson):   #check if the login is valid
             print("Valid Login")
             error=""
-            return redirect(url_for("home", username = userjson["credentials"]))
+            return redirect(url_for("profile.home", username = userjson["credentials"]))
         else:
             error = "Invalid username/password"
     return render_template("login.html", error=error)    #show the login form
 
 
 #LOGOUT
-@app.route("/logout")
+@bp.route("/logout")
 def logout():
-    return redirect(url_for("index"))
+    return redirect(url_for("root.index"))
 
 
 def valid_login(userjson):  #check if login is valid
@@ -98,13 +46,14 @@ def valid_login(userjson):  #check if login is valid
 
 
 
+
 ### --- User Creation Routes --- ###
-@app.route("/accountcreated")
+@bp.route("/accountcreated")
 def accountcreated():
     return render_template("accountcreated.html")
 
 
-@app.route("/createaccount", methods=["POST", "GET"])
+@bp.route("/createaccount", methods=["POST", "GET"])
 def createaccount():
     error = ""  #error message that shows up on incorrect login
     print(error)
@@ -120,7 +69,7 @@ def createaccount():
             case 0:
                 print("Valid New Account")
                 add_user(userjson)
-                return redirect(url_for("accountcreated"))
+                return redirect(url_for("auth.accountcreated"))
             case 1:
                 error = "Username already taken"
             case 2:
@@ -164,23 +113,3 @@ def freeUserId():
             return i
     return last_index+1     #if every id in the range is taken, return the biggest+1
 
-
-
-
-
-### --- Fileshare --- ###
-@app.get("/fileshare")
-def fileshare():
-    print("hit endpoint: fileshare")
-    return render_template("fileshare.html")
-
-@app.post("/upload")
-def upload_file():
-    return jsonify({"user":"your file was uploaded"})
-
-
-
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
