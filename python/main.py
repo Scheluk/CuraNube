@@ -1,11 +1,14 @@
 from copyreg import constructor
 import json
+from operator import itemgetter
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 database = [
-    {"username":"admin","email":"admin@gmail.com","id":"1","pw":"admin"}
+    {"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin"},
+    {"username":"temp1","email":"t1@gmail.com","id":2,"pw":"admin"},
+    {"username":"temp2","email":"t2@gmail.com","id":4,"pw":"admin"}
 ]
 
 
@@ -143,17 +146,28 @@ def valid_accountcreation(userjson):
     return 0
 
 def add_user(userjson):
-    #newUserId = database.__len__ + 1
     database.append({
         "username":userjson["username"],
         "email":userjson["email"],
         "pw":userjson["pw"],
-        "id":str(len(database)+1)
+        "id":freeUserId()
     })
     print(database)
-    #for user in database:
-     #   print(user)
 
+
+#function to dynamically assign user ids
+def freeUserId():
+    last_index = max(database, key=itemgetter("id"))["id"]    #search for biggest user id
+    for i in range(1, int(last_index)):      #from 1 to the biggest user id
+        #check if the id is already taken
+        for user in database:
+            idExists = False
+            if i == user["id"]:
+                idExists = True
+                break
+        if(not idExists):   #if not, return it
+            return i
+    return last_index+1     #if every id in the range is taken, return the biggest+1
 
 ### --- Fileshare --- ###
 @app.get("/fileshare")
