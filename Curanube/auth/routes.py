@@ -1,3 +1,4 @@
+from audioop import add
 from Curanube.auth import bp
 from Curanube.db import database, get_db
 from operator import itemgetter
@@ -69,10 +70,7 @@ def createaccount():
         print(db)
         if error == "":
             try:
-                db.execute(
-                    "INSERT INTO user (id, email, username, pw, verified) VALUES (?, ?, ?, ?, ?)",
-                    (freeUserId(db), userjson["email"], userjson["username"], generate_password_hash(userjson["pw"]), False),
-                )
+                add_user(userjson, db)
                 db.commit()
             except db.IntegrityError:
                 error = "User or E-Mail already registered."
@@ -93,15 +91,10 @@ def valid_accountcreation(userjson):
             return 2
     return 0
 
-def add_user(userjson):
-    database.append({
-        "username":userjson["username"],
-        "email":userjson["email"],
-        "pw":userjson["pw"],
-        "id":freeUserId(),
-        "verified":False
-    })
-    print(database)
+def add_user(userjson, db):
+    db.execute("INSERT INTO user (id, email, username, pw, verified) VALUES (?, ?, ?, ?, ?)",
+        (freeUserId(db), userjson["email"], userjson["username"], generate_password_hash(userjson["pw"]), False),
+    )
 
 
 #function to dynamically assign user ids

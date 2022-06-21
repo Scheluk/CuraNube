@@ -5,7 +5,7 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 
 database = [
-    {"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin","verified":True},
+    #{"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin","verified":True},
     {"username":"temp1","email":"t1@gmail.com","id":2,"pw":"admin","verified":False},
     {"username":"temp2","email":"t2@gmail.com","id":4,"pw":"admin","verified":True}
 ]
@@ -52,7 +52,10 @@ def print_users():
 
     db.row_factory = sqlite3.Row
 
-    result = db.execute("SELECT * FROM user").fetchall()
+    sql = "SELECT * FROM user"#
+    #db.execute("DELETE FROM user WHERE id = 1")
+    #db.commit()
+    result = db.execute(sql).fetchall()
 
     list_accumulator = []
     for item in result:
