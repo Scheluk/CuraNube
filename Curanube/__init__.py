@@ -26,6 +26,7 @@ def create_app():
 
     print(os.path.join(app.instance_path, "curanube.sqlite"))
 
-    return app
+    from . import db
+    db.init_app(app)
 
-    #from Curanube import routes        #import routes
+    return app

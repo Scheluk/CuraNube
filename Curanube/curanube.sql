@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS file;
+
+CREATE TABLE user (
+    id INTEGER PRIMARY KEY NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    pw TEXT NOT NULL,
+    verified BOOLEAN
+);
+
+CREATE TABLE file (
+    id INTEGER PRIMARY KEY NOT NULL,
+    owner_id INTEGER,
+    file_name TEXT NOT NULL,
+    FOREIGN KEY (owner_id) REFERENCES user (id)
+);

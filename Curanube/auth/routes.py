@@ -1,7 +1,8 @@
 from Curanube.auth import bp
-from Curanube.db import database
+from Curanube.db import database, get_db
 from operator import itemgetter
 from flask import redirect, url_for, render_template, request, jsonify
+from werkzeug.security import generate_password_hash
 
 ### --- login routes --- ###
 
@@ -23,7 +24,7 @@ def login():
             return redirect(url_for("profile.home", username = userjson["credentials"]))
         else:
             error = "Invalid username/password"
-    return render_template("login.html", error=error)    #show the login form
+    return render_template("auth/login.html", error=error)    #show the login form
 
 
 #LOGOUT
@@ -50,7 +51,7 @@ def valid_login(userjson):  #check if login is valid
 ### --- User Creation Routes --- ###
 @bp.route("/accountcreated")
 def accountcreated():
-    return render_template("accountcreated.html")
+    return render_template("auth/accountcreated.html")
 
 
 @bp.route("/createaccount", methods=["POST", "GET"])
@@ -64,17 +65,21 @@ def createaccount():
             username=request.form["username"],
             pw=request.form["password"]
         ).get_json() 
-        print(userjson)
-        match valid_accountcreation(userjson):   #check if the login is valid
-            case 0:
-                print("Valid New Account")
-                add_user(userjson)
+        db = get_db()
+        print(db)
+        if error == "":
+            try:
+                db.execute(
+                    "INSERT INTO user (id, email, username, pw, verified) VALUES (?, ?, ?, ?, ?)",
+                    (freeUserId(db), userjson["email"], userjson["username"], generate_password_hash(userjson["pw"]), False),
+                )
+                db.commit()
+            except db.IntegrityError:
+                error = "User or E-Mail already registered."
+            else:
                 return redirect(url_for("auth.accountcreated"))
-            case 1:
-                error = "Username already taken"
-            case 2:
-                error = "E-Mail already taken"
-    return render_template("createaccount.html", error = error)
+
+    return render_template("auth/createaccount.html", error = error)
 
 
 
@@ -100,16 +105,21 @@ def add_user(userjson):
 
 
 #function to dynamically assign user ids
-def freeUserId():
-    last_index = max(database, key=itemgetter("id"))["id"] if len(database) != 0 else 1   #search for biggest user id
+def freeUserId(db):
+    cursor = db.cursor()
+    cursor.execute("SELECT MAX(id) AS maximum FROM user")   #search for biggest user id
+    result = cursor.fetchall()
+    for i in result:
+        last_index = i[0]
+    print(last_index)
+    if last_index is None:
+        return 1
+    
     for i in range(1, int(last_index)):      #from 1 to the biggest user id
         #check if the id is already taken
-        for user in database:
-            idExists = False
-            if i == user["id"]:
-                idExists = True
-                break
-        if(not idExists):   #if not, return it
+        cursor.execute("SELECT id FROM user WHERE id=?", (i,))
+        result = cursor.fetchall()
+        if not result:
             return i
     return last_index+1     #if every id in the range is taken, return the biggest+1
 
