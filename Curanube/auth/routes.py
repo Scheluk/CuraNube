@@ -1,6 +1,6 @@
 import functools
-from Curanube.auth import bp
 from Curanube.db import database, get_db
+from Curanube.auth import bp
 from Curanube.auth.token import generate_verification_token, verify_token
 #from Curanube.profile.email import send_email
 from flask import redirect, url_for, render_template, request, jsonify, session, g, flash
@@ -29,7 +29,7 @@ def load_logged_in_user():
 #LOGIN
 @bp.route("/login", methods=["POST", "GET"])
 def login():
-    error = ""  #error message that shows up on incorrect login
+    error = None  #error message that shows up on incorrect login
     if request.method == "POST":    #if POST, do the login
         #convert the form data to json response, and then to json data
         userjson = jsonify(
@@ -50,14 +50,14 @@ def login():
             error = "Incorrect password"
         elif not user["verified"]:
             error = "User not verified"
-        if error == "":
+        if error == None:
             session.clear()
             session["user_id"] = user["id"]
             return redirect (url_for("profile.home", username = user["username"]))
         
         flash(error)
 
-    return render_template("auth/login.html", error=error)    #show the login form
+    return render_template("auth/login.html")    #show the login form
 
 
 

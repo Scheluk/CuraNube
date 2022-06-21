@@ -4,7 +4,7 @@
 
 <div>
   <h1>Please Login</h1>
-  <p>User your Login Data to login.</p>
+  <p>Use your Login Data to login.</p>
 </div>
 
 {% endblock %}
@@ -12,7 +12,6 @@
 
 <div>
     <form action="http://127.0.0.1:5000/auth/login" method="post">
-        <div><p>{{error}}</p></div>
         <div class="form-field">
             <label for="username">Username</label>
             <input id="form-field" name="username" type="text" required>

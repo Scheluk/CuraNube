@@ -2,14 +2,17 @@ import os
 from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
-from Curanube.auth import bp as auth_bp
-from Curanube.root import bp as root_bp
-from Curanube.profile import bp as profile_bp
 
 
+
+from . import db
+
+db = db
+login = LoginManager()
+mail = Mail()
 
 def create_app():
-    app = Flask(__name__, template_folder="templates", static_folder="static")
+    app = Flask(__name__)
     app.config.from_mapping(
         TEMPLATES_AUTO_RELOAD = True,
         SECRET_KEY="camembert",
@@ -24,13 +27,6 @@ def create_app():
         MAIL_DEFAULT_SENDER = "curanube@gmail.com"
     )
 
-    
-
-    app.register_blueprint(auth_bp, url_prefix="/auth")
-    app.register_blueprint(root_bp, url_prefix="/")
-    app.register_blueprint(profile_bp, url_prefix="/profile")
-    
-
     try:
         os.makedirs(app.instance_path)
     except OSError:
@@ -38,8 +34,20 @@ def create_app():
 
     print(os.path.join(app.instance_path, "curanube.sqlite"))
 
-    from . import db
+    
     db.init_app(app)
+    #login.init_app(app)
+    mail.init_app(app)
+
+    from Curanube.auth import bp as auth_bp
+    app.register_blueprint(auth_bp, url_prefix="/auth")
+    from Curanube.root import bp as root_bp
+    app.register_blueprint(root_bp, url_prefix="/")
+    from Curanube.profile import bp as profile_bp
+    app.register_blueprint(profile_bp, url_prefix="/profile")
+    
+
+    
 
     return app
 
