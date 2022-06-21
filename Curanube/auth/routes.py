@@ -1,11 +1,27 @@
-from audioop import add
+import functools
 from Curanube.auth import bp
 from Curanube.db import database, get_db
 from operator import itemgetter
-from flask import redirect, url_for, render_template, request, jsonify
-from werkzeug.security import generate_password_hash
+from Curanube.auth.token import generate_verification_token, verify_token
+from Curanube.profile.email import send_email
+from flask import redirect, url_for, render_template, request, jsonify, session, g, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 ### --- login routes --- ###
+
+
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get("user_id")
+
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute(
+            "SELECT * FROM user WHERE id = ?", (user_id,)
+        ).fetchone()
+
 
 
 #LOGIN
@@ -19,34 +35,45 @@ def login():
             pw=request.form["password"]
         ).get_json() 
         print(userjson)
-        if valid_login(userjson):   #check if the login is valid
-            print("Valid Login")
-            error=""
-            return redirect(url_for("profile.home", username = userjson["credentials"]))
+        db = get_db()
+        if "@" in userjson["credentials"]:
+            user = db.execute("SELECT * FROM user WHERE email = (?)", (userjson["credentials"],)).fetchone()
         else:
-            error = "Invalid username/password"
+            user = db.execute("SELECT * FROM user WHERE username = (?)", (userjson["credentials"],)).fetchone()
+        
+
+        if user is None:
+            error = "Incorrect Username/Email"
+        elif not check_password_hash(user["pw"], userjson["pw"]):
+            error = "Incorrect password"
+        elif not user["verified"]:
+            error = "User not verified"
+        if error == "":
+            session.clear()
+            session["user_id"] = user["id"]
+            return redirect (url_for("profile.home", username = user["username"]))
+        
+        flash(error)
+
     return render_template("auth/login.html", error=error)    #show the login form
+
 
 
 #LOGOUT
 @bp.route("/logout")
 def logout():
+    session.clear()
     return redirect(url_for("root.index"))
 
 
-def valid_login(userjson):  #check if login is valid
-    for user in database:
-        if userjson["credentials"] == user["username"] or userjson["credentials"] == user["email"]:   #if user with that username or email exists
-            if userjson["pw"] == user["pw"] and user["verified"]:    #if password is correct and user is verified
-                return True
-            else:
-                print("DEBUG: wrong password")
-                return False
-    print("DEBUG: wrong username, user doesn't exist")
-    return False
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for("auth.login"))
 
-
-
+        return view(**kwargs)
+    return wrapped_view
 
 
 ### --- User Creation Routes --- ###
@@ -70,8 +97,17 @@ def createaccount():
         print(db)
         if error == "":
             try:
-                add_user(userjson, db)
+                db.execute("INSERT INTO user (id, email, username, pw, verified) VALUES (?, ?, ?, ?, ?)",
+                    (freeUserId(db), userjson["email"], userjson["username"], generate_password_hash(userjson["pw"]), False),
+                )
                 db.commit()
+
+                #token = generate_verification_token(userjson["email"])
+                #verify_url = url_for("verify_email", token = token, _external=True)
+                #html = render_template("auth/email_account_verification.html", verify_url = verify_url)
+                #subject = "Please confirm your email"
+                #send_email(userjson["email"], subject, html)
+
             except db.IntegrityError:
                 error = "User or E-Mail already registered."
             else:
@@ -79,22 +115,6 @@ def createaccount():
 
     return render_template("auth/createaccount.html", error = error)
 
-
-
-def valid_accountcreation(userjson):
-    for user in database:
-        if userjson["username"] == user["username"]:
-            print("DEBUG: User with that username already exists")
-            return 1
-        if userjson["email"] == user["email"]:
-            print("DEBUG: User with that email already exists")
-            return 2
-    return 0
-
-def add_user(userjson, db):
-    db.execute("INSERT INTO user (id, email, username, pw, verified) VALUES (?, ?, ?, ?, ?)",
-        (freeUserId(db), userjson["email"], userjson["username"], generate_password_hash(userjson["pw"]), False),
-    )
 
 
 #function to dynamically assign user ids
@@ -116,3 +136,23 @@ def freeUserId(db):
             return i
     return last_index+1     #if every id in the range is taken, return the biggest+1
 
+
+
+
+
+@bp.route("/verify/<token>")
+def verify_email(token):
+    try:
+        email = verify_token(token)
+    except:
+        print("Verification Link is invalid or has expired")
+    db = get_db()
+    db.execute("SELECT verified FROM user WHERE email = (?)", (email,))
+    result = db.fetchone()
+    if result == True:
+        print("Account already verified, please login")
+    else:
+        db.execute("UPDATE user SET verified = True WHERE email = (?)", (email,))
+        db.commit()
+        print("You have been confirmed")
+    return redirect(url_for("root.index"))

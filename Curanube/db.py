@@ -3,6 +3,7 @@ import sqlite3
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
+from werkzeug.security import generate_password_hash
 
 database = [
     #{"username":"admin","email":"admin@gmail.com","id":1,"pw":"admin","verified":True},
@@ -40,6 +41,10 @@ def init_db():
 def init_db_command():
     """"Clear the existing data and create new tables"""
     init_db()
+    db = get_db()
+    db.execute("INSERT INTO user (id, email, username, pw, verified) VALUES (?, ?, ?, ?, ?)",
+                    (1, "admin@gmail.com", "admin", generate_password_hash("admin"), True),)
+    db.commit()
     click.echo("Initialized the database")
 
 
@@ -47,14 +52,26 @@ def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
 
+
+
+
+
+#Database Utility
+
+def delete_user(i):
+    db = get_db()
+
+    db.execute("DELETE FROM user WHERE id >= (?)", (i,))
+    db.commit()
+
+
+
 def print_users():
     db = get_db()
 
     db.row_factory = sqlite3.Row
 
-    sql = "SELECT * FROM user"#
-    #db.execute("DELETE FROM user WHERE id = 1")
-    #db.commit()
+    sql = "SELECT * FROM user"
     result = db.execute(sql).fetchall()
 
     list_accumulator = []
