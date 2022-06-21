@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_login import LoginManager
 from flask_mail import Mail
 from Curanube.auth import bp as auth_bp
 from Curanube.root import bp as root_bp
@@ -22,6 +23,8 @@ def create_app():
         MAIL_PASSWORD = "curanube325",#os.environ["APP_MAIL_PASSWORD"],
         MAIL_DEFAULT_SENDER = "curanube@gmail.com"
     )
+
+    
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(root_bp, url_prefix="/")

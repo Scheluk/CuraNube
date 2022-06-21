@@ -1,15 +1,12 @@
 import functools
 from Curanube.auth import bp
 from Curanube.db import database, get_db
-from operator import itemgetter
 from Curanube.auth.token import generate_verification_token, verify_token
-from Curanube.profile.email import send_email
+#from Curanube.profile.email import send_email
 from flask import redirect, url_for, render_template, request, jsonify, session, g, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 
 ### --- login routes --- ###
-
-
 
 @bp.before_app_request
 def load_logged_in_user():
@@ -21,6 +18,11 @@ def load_logged_in_user():
         g.user = get_db().execute(
             "SELECT * FROM user WHERE id = ?", (user_id,)
         ).fetchone()
+
+
+
+
+
 
 
 

@@ -20,7 +20,5 @@ e TAB s TAB a TAB
 
 
 further plugins:
-pip install flask-sqlalchemy
-pip install datetime
-pip install flask-admin
+pip install flask-login
 pip install Flask-Mail
