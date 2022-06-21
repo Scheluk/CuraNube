@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <title>CuraNube</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
-    <script src="..\static\js\code.js"></script>
   </head>
   <body>
       <header>
                  
           <div class="hcontainer">
             <img id="logoimage" src="../static/img/cloud.jpg" alt="Cloud Logo">
+            <p class="utc-time" style="position: relative;top: 8px;" id="display_time"></p>
           </div>
 
         {% block headercontent %}
@@ -19,6 +19,65 @@
       </header>
 
       <main>
+        <script>
+         
+          /*function getTime() {
+            const apiUrl = 'http://worldclockapi.com/api/json/utc/now';
+            fetch(apiUrl).then(response => { return response.json();}).then(data => {
+              
+              // Work with JSON data here
+            console.log(data);
+            console.log(obj);
+            }).catch(err => {
+            // Do something for an error here
+          });   
+        }; */
+
+        /* function appendData (data) {
+            console.log (data);
+            document.querySelector ("div").innerHTML = JSON.stringify(data);
+        }
+          const apiUrl = 'http://worldclockapi.com/api/json/utc/now';
+          fetch (apiUrl).then (function (response) {
+          return response.json();
+          }).then (function (data) {
+          appendData (data);
+          }).catch (function (error) {
+          console.log ("error: " + error);
+        }); */
+/*
+        var timezones = ["UTC", "America/Los_Angeles", "America/New_York", "America/New_York", "Europe/London", "Europe/Paris", "Europe/Berlin", "Europe/Amsterdam", "Asia/Hong_Kong","Europe/Moscow"
+    , "Asia/Dubai", "Asia/Hong_Kong", "	Asia/Shanghai", "Asia/Hong_Kong", "Asia/Tokyo", "Australia/Brisbane"];
+
+setInterval(async () => {
+    let randomTimeZone = timezones[Math.floor(Math.random() * timezones.length)];
+    let response = await fetch("/timer" + randomTimeZone.replace("/",":"));
+    let timeObj = await response.json();
+    let tzString = timeObj.timeZone.split("/").pop();
+    document.getElementById("display_time").innerHTML = tzString.replace("_", " ") + " " + timeObj.time;
+    console.log(tzString);
+}, 5000);
+
+*/
+      
+function getTime() {
+    const url = new URL("http://worldclockapi.com/api/json/utc/now")
+   
+    fetch(url, {method: "GET"})
+        .then(response => response.json())
+        .then((data) => {
+            const msgBoard = document.getElementById("display_time")
+            const text = document.createTextNode(JSON.stringify(data))
+            msgBoard.append(text)
+        })
+}
+
+        </script>
+      </head>
+        <body>
+          <button onClick="getTime()">Go</button><br>
+        <span id="result">
+        </body>
         
         {% block maincontent %}
         {% endblock %}
