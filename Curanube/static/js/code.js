@@ -14,6 +14,17 @@ function getMessage() {
         })
 }
 
+function loadImpressum() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+       document.getElementById("impressum").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "../../static/img/impressum.txt", true);
+    xhttp.send();
+  }
+
 /*async function submitLogin(username, password) {
     const response = await fetch.
     const formData = new FormData(e.target)

@@ -1,0 +1,3 @@
+<h2> Impressum als AJAX</h2>
+<p>Just us</p>
+<p>Berufsbegleitende Vollzeitstudenten</p>

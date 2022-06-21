@@ -40,8 +40,14 @@
             <a href="{{ url_for('auth.login') }}"><input type="button" value="Create Account" id="createaccountbutton"></a> <br> 
             <a href="{{ url_for('root.about') }}"><input type="button" value="About" id="aboutbutton"></a>
   -->   
+ 
   </div>
    <p>Just buttons</p>
 </div>
 
+<div id="impressum">
+  <h2>Impressum</h2>
+  <button type="button" onclick="loadImpressum()">Show impressum</button>
+</div>
 {% endblock %}
+
