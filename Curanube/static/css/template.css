@@ -10,7 +10,7 @@ main {
 button {
     text-align: center;
     background-color: white;
-    width: 200 rem;
+    width: 200 px;
     font-size: 16px;
     color: rgb(126, 164, 245);
     padding: 12px 28px;
@@ -63,6 +63,6 @@ body {
    
     body {
         font-size: 10px;
-        background-color: red;
+        background-color: rgb(51, 48, 228);
     }
 }
