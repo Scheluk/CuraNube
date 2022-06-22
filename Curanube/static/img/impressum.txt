@@ -1,3 +1,4 @@
 <h2> Impressum als AJAX</h2>
 <p>Just us</p>
 <p>Berufsbegleitende Vollzeitstudenten</p>
+<p>Lukas Schelepet, Mathias Palfinger, Eduard Tif & Curt Schleritzko</p>
