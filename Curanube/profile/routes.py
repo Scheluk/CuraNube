@@ -14,14 +14,14 @@ def home(username):
 @bp.route("/<username>/library")
 @login_required
 def library(username):
-    return "Library"
+    return render_template("profile/userspace_library.html", username = current_user.username)
 
 
 
 @bp.route("/<username>/account")
 @login_required
 def myaccount(username):
-    return "My Account"
+    return render_template("profile/userspace_myaccount.html", username = current_user.username)
 
 
 
@@ -29,11 +29,11 @@ def myaccount(username):
 @bp.route("/<username>/settings")
 @login_required
 def settings(username):
-    return "Settings"
+    return render_template("profile/userspace_settings.html", username = current_user.username)
 
 
 
 @bp.route("/<username>/delete_account")
 @login_required
 def delete_account(username):
-    return "Delete Account"
+    return render_template("profile/userspace_deleteaccount.html", username = current_user.username)

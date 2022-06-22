@@ -1,4 +1,4 @@
-{% extends "userspace_template.html" %}
+{% extends "template.html" %}
 {% block headercontent %}
 
 <div>
@@ -10,15 +10,15 @@
 {% block maincontent %}
 
 <div class="mcontainer">
-    <form action="{{ url_for('') }}">               <!--Insert rigth link-->
+    <form action="{{ url_for('profile.home', username = current_user.username) }}">               <!--Insert rigth link-->
         <button type="submit">Change Picture</button>
     </form>
 
-    <form action="{{ url_for('root.index') }}">               
+    <form action="{{ url_for('profile.myaccount', username = current_user.username) }}">               
         <button type="submit">My Account</button>
     </form>
 
-    <form action="{{ url_for('root.index') }}">                          
+    <form action="{{ url_for('profile.home', username = current_user.username) }}">                          
         <button type="submit">Home</button>
     </form>
 </div>
