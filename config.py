@@ -6,7 +6,7 @@ print(basedir)
 print(os.path.join(basedir, "curanube.db"))
 
 class Config(object):
-    SECRET_KEY=os.environ.get("SECRET_KEY") or "camembert",
+    SECRET_KEY="camembert"
     TEMPLATES_AUTO_RELOAD = True,
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, "curanube.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False,

@@ -43,8 +43,8 @@ def login():
         elif not user.confirmed:
             error = "User not verified"
         if error == None:
-            login_user(user)#request.form.get("remember_me"))
-            return redirect (url_for("profile.home", username = user.username))
+            login_user(user)
+            return redirect(url_for("profile.home", username = user.username))
         
         flash(error)
     error = None
@@ -59,15 +59,6 @@ def logout():
     logout_user()
     return redirect(url_for("root.index"))
 
-
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for("auth.login"))
-
-        return view(**kwargs)
-    return wrapped_view
 
 
 ### --- User Creation Routes --- ###
@@ -86,11 +77,14 @@ def createaccount():
             username=request.form["username"],
             pw=request.form["password"]
         ).get_json()
+        error = valid_new_account(userjson)
         if error == None:
             user = User(id=freeUserId(), email=userjson["email"], username=userjson["username"], password=generate_password_hash(userjson["pw"]), confirmed=False)
             db.session.add(user)
             db.session.commit()
-                #token = generate_verification_token(userjson["email"])
+            print(userjson["email"])
+            token = generate_verification_token(userjson["email"])
+            print(token)
                 #verify_url = url_for("verify_email", token = token, _external=True)
                 #html = render_template("auth/email_account_verification.html", verify_url = verify_url)
                 #subject = "Please confirm your email"
@@ -123,6 +117,12 @@ def freeUserId():
     return last_index+1     #if every id in the range is taken, return the biggest+1
 
 
+def valid_new_account(userjson):
+    if User.query.filter_by(email=userjson["email"]).first() is not None:
+        return "Please use a different email address."
+    if User.query.filter_by(username=userjson["username"]).first() is not None:
+        return "Please use a different username."
+    return None
 
 
 

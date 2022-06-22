@@ -1,7 +1,7 @@
 from inspect import ArgSpec
 from threading import Thread
 from flask_mail import Message
-#from Curanube import mail
+from Curanube import mail
 from flask import current_app
 
 def send_async_email(app, msg):

@@ -4,7 +4,9 @@ from flask import render_template
 from flask_login import login_required, current_user
 
 @bp.route("/<username>/home")
-@login_required
+#login is required, so if no user is currently logged in (current_user = None), redirect to auth.login,
+#and after login, redirect to the page that the user wanted to access before
+@login_required     
 def home(username):
     return render_template("profile/userspace_home.html", username = current_user.username)
 
