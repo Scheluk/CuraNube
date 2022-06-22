@@ -1,3 +1,4 @@
+from flask_login import current_user, logout_user
 from Curanube.root import bp
 from flask import render_template
 from Curanube import db
@@ -8,6 +9,8 @@ from werkzeug.security import generate_password_hash
 #GET Request
 @bp.route("/") 
 def index():
+    if current_user.is_authenticated:
+        logout_user()
     return render_template("root/index.html")
 
 @bp.route("/about")

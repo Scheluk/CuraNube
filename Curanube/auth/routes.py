@@ -5,7 +5,7 @@ from Curanube.auth import bp
 from Curanube.auth.token import generate_verification_token, verify_token
 from Curanube.auth.email import send_email
 from flask import redirect, url_for, render_template, request, jsonify, g, flash
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.sql.expression import func
 
@@ -20,7 +20,7 @@ from sqlalchemy.sql.expression import func
 @bp.route("/login", methods=["POST", "GET"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("auth.index"))
+        return redirect(url_for("root.index"))
     if request.method == "POST":    #if POST, do the login
         error = None  #error message that shows up on incorrect login
         #convert the form data to json response, and then to json data
@@ -35,6 +35,7 @@ def login():
             user = User.query.filter_by(username=userjson["credentials"]).first()
         
         print(user.confirmed)
+        print(current_user)
         if user is None:
             error = "Incorrect Username/Email"
         elif not check_password_hash(user.password, userjson["pw"]):
@@ -42,7 +43,7 @@ def login():
         elif not user.confirmed:
             error = "User not verified"
         if error == None:
-            #login_user(user, remember=True)#request.form.get("remember_me"))
+            login_user(user)#request.form.get("remember_me"))
             return redirect (url_for("profile.home", username = user.username))
         
         flash(error)
@@ -53,6 +54,7 @@ def login():
 
 #LOGOUT
 @bp.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for("root.index"))

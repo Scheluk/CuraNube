@@ -9,6 +9,7 @@ from config import Config
 
 db = SQLAlchemy()
 login = LoginManager()
+login.login_view = "auth.login"
 mail = Mail()
 
 def create_app(config_class=Config):
