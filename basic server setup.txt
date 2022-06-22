@@ -8,7 +8,7 @@ install flask in virtual env:	pip install flask
 
 init of server:
 activate virtual env
-1. $env:FLASK_APP = "Curanube"
+1. $env:FLASK_APP = "curanube.py"
 2. $env:FLASK_ENV = "virtual"     //oder wie ihr euer virtual environment auch immer benannt habt
 3. $env:FLASK_DEBUG = 1
 start flask server:	    flask run
@@ -20,5 +20,6 @@ e TAB s TAB a TAB
 
 
 further plugins:
-pip install flask-login
-pip install Flask-Mail
+pip install flask_sqlalchemy
+pip install flask_login
+pip install flask_mail
