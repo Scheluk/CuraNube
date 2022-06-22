@@ -3,17 +3,17 @@ header {
 }
 
 html {
-    background-color: skyblue;
+    background-color: rgb(75, 147, 255);
     text-align: center;
 }
 
 main {
-    background-color: skyblue;
+    background-color: rgb(75, 147, 255);
 }
 
 button {
     background-color: white;
-    width: 200px;
+    width: 200 rem;
     font-size: 16px;
     color: rgb(126, 164, 245);
     padding: 12px 28px;
@@ -57,13 +57,43 @@ body {
     "c1"
     "c2";    
     height: 100%;
-    width: 100%;
+    
     }
 
 
 @media  screen and (max-width: 500px) {
     body {
         font-size: 80%;
+    }
+
+
+    button {
+        background-color: white;
+        width: 150px;
+        font-size: 16px;
+        color: rgb(75, 147, 255);
+        padding: 8px 16px;
+        border-radius: 12px;
+        transition-duration: 0.5s;
+        
+    }
+        
+    
+}
+
+@media  screen and (min-width: 501px) {
+
+    header {
+        background-color: white;
+    }
+    
+    html {
+        background-color: skyblue;
+        text-align: center;
+    }
+    
+    main {
+        background-color: skyblue;
     }
 
     button {
@@ -75,12 +105,5 @@ body {
         border-radius: 12px;
         transition-duration: 0.5s;
     }
-        
-    
-}
-
-@media  screen and (min-width: 501px) {
-           
-   
  
 }
