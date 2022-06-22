@@ -36,8 +36,9 @@ button:active {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    padding: 5%;
     border-radius: 50%;
-    height: 5%;
+    height: 10%;
     width: 10%;
 }
 
@@ -59,29 +60,27 @@ body {
     width: 100%;
     }
 
+
 @media  screen and (max-width: 500px) {
     body {
         font-size: 80%;
     }
+
+    button {
+        background-color: white;
+        width: 150px;
+        font-size: 16px;
+        color: rgb(126, 164, 245);
+        padding: 8px 16px;
+        border-radius: 12px;
+        transition-duration: 0.5s;
+    }
         
-    header {
-        grid-area: c1;         
-    }
     
-    main {
-        grid-area: c2;
-    }
- 
 }
 
 @media  screen and (min-width: 501px) {
            
-    header {
-        grid-area: c1;         
-    }
-    
-    main {
-        grid-area: c2;
-    }
+   
  
 }

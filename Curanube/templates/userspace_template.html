@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>CuraNube</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/template.css') }}">
+    <script src="..\static\js\code.js"></script>
+    <p class="utc-time" style="position: relative;top: 8px;" id="cat_fact"></p>
   </head>
   <body>
       <header>
@@ -19,7 +21,8 @@
 
     <main>
     
-      <!--Insert REST API Clock-->
+      <button onClick="getFact()">Time</button><br>
+      <span id="result">
       {% block maincontent %}
       {% endblock %}
 

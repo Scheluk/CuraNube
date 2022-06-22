@@ -1,19 +1,3 @@
-function getMessage() {
-    const url = new URL("http://127.0.0.1:5000/msg")
-    const searchText = document.getElementById("search-box").value
-
-    data = {"user":searchText}
-
-    for (let k in data) {url.searchParams.append(k, data[k])}
-    fetch(url, {method: "GET"})
-        .then(response => response.json())
-        .then((data) => {
-            const msgBoard = document.getElementById("msg")
-            const text = document.createTextNode(JSON.stringify(data))
-            msgBoard.append(text)
-        })
-}
-
 function loadImpressum() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -32,6 +16,17 @@ function getTime() {
         .then((data) => {
             const msgBoard = document.getElementById("display_time")
             const text = document.createTextNode(JSON.stringify(data.currentDateTime))
+            msgBoard.append(text)
+        })
+}
+
+function getFact() {
+    const url = new URL("https://catfact.ninja/fact")
+    fetch(url, {method: "GET"})
+        .then(response => response.json())
+        .then((data) => {
+            const msgBoard = document.getElementById("display_time")
+            const text = document.createTextNode(JSON.stringify(data.fact))
             msgBoard.append(text)
         })
 }
