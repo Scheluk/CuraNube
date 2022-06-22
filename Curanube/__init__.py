@@ -1,42 +1,24 @@
 import os
-from flask import Flask
+from flask import Flask, current_app
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
+from config import Config
 
 
 
-from . import db
-
-db = db
+db = SQLAlchemy()
 login = LoginManager()
 mail = Mail()
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_mapping(
-        TEMPLATES_AUTO_RELOAD = True,
-        SECRET_KEY="camembert",
-        SECURITY_PASSWORD_SALT = "ambrosia",
-        DATABASE = os.path.join(app.instance_path, "curanube.sqlite"),
-        MAIL_SERVER = "smtp.googlemail.com",
-        MAIL_PORT = 465,
-        MAIL_USE_TLS = False,
-        MAIL_USE_SSL = True,
-        MAIL_USERNAME = "Cura Nube",#os.environ["APP_MAIL_USERNAME"],
-        MAIL_PASSWORD = "curanube325",#os.environ["APP_MAIL_PASSWORD"],
-        MAIL_DEFAULT_SENDER = "curanube@gmail.com"
-    )
+    app.config.from_object(config_class)
 
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
 
-    print(os.path.join(app.instance_path, "curanube.sqlite"))
 
-    
     db.init_app(app)
-    #login.init_app(app)
+    login.init_app(app)
     mail.init_app(app)
 
     from Curanube.auth import bp as auth_bp
@@ -46,8 +28,10 @@ def create_app():
     from Curanube.profile import bp as profile_bp
     app.register_blueprint(profile_bp, url_prefix="/profile")
     
-
+    
     
 
     return app
 
+
+from Curanube import models

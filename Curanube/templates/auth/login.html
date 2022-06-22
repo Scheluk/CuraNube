@@ -12,6 +12,15 @@
 
 <div>
     <form action="http://127.0.0.1:5000/auth/login" method="post">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <div class="form-field">
             <label for="username">Username</label>
             <input id="form-field" name="username" type="text" required>
@@ -19,6 +28,9 @@
             <div class="form-field">
             <label for="password">Password</label>
             <input id="form-field" name="password" type="password" required >
+        </div>
+        <div class="form-field">
+            <input id="form-field" type="checkbox" name="remember_me">Remember me
         </div>
         <div class="form-field">
             <input id="form-field" type="submit" value="submit">

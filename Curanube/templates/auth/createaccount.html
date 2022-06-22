@@ -18,7 +18,15 @@
 <div class="mcontainer">
   
   <form action="{{ url_for('auth.createaccount') }}" method="post">
-    {{error}}
+    {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
     <div class="form-field">
       <label for="email">E-Mail</label>
       <input id="form-field" name="email" type="email" required><br><br>

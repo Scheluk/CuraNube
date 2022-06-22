@@ -1,5 +1,4 @@
 from operator import itemgetter
-from Curanube.db import database
 from flask import Flask, jsonify, redirect, render_template, request, url_for, flash, send_from_directory
 from Curanube import app
 from werkzeug.utils import secure_filename
