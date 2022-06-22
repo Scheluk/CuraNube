@@ -15,7 +15,7 @@ function getTime() {
         .then(response => response.json())
         .then((data) => {
             const msgBoard = document.getElementById("display_time")
-            const text = document.createTextNode(JSON.stringify(data.currentDateTime))
+            const text = document.createTextNode("Time you pushed the Button " + JSON.stringify(data.currentDateTime).replace("Z", " ").replace("T", " "))
             msgBoard.append(text)
         })
 }
@@ -25,9 +25,11 @@ function getFact() {
     fetch(url, {method: "GET"})
         .then(response => response.json())
         .then((data) => {
-            const msgBoard = document.getElementById("display_time")
+            const msgBoard = document.getElementById("result")
             const text = document.createTextNode(JSON.stringify(data.fact))
             msgBoard.append(text)
+            const breakl = document.createElement('br')
+            msgBoard.append(breakl)
         })
 }
 
