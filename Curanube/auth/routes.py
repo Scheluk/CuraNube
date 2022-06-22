@@ -42,7 +42,7 @@ def login():
         elif not user.confirmed:
             error = "User not verified"
         if error == None:
-            login_user(user, remember=True)#request.form.get("remember_me"))
+            #login_user(user, remember=True)#request.form.get("remember_me"))
             return redirect (url_for("profile.home", username = user.username))
         
         flash(error)
