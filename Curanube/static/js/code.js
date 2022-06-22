@@ -10,12 +10,12 @@ function loadImpressum() {
   }
 
 function getTime() {
-    const url = new URL("http://worldclockapi.com/api/json/utc/now")
+    const url = new URL("http://worldtimeapi.org/api/ip")
     fetch(url, {method: "GET"})
         .then(response => response.json())
         .then((data) => {
             const msgBoard = document.getElementById("display_time")
-            const text = document.createTextNode("Time you pushed the Button " + JSON.stringify(data.currentDateTime).replace("Z", " ").replace("T", " "))
+            const text = document.createTextNode(JSON.stringify(data.datetime).replace("Z", " ").replace("T", " "))
             msgBoard.append(text)
         })
 }
