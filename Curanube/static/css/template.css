@@ -1,17 +1,14 @@
 header {
+    text-align: center;
     background-color: white;
 }
 
-html {
-    background-color: skyblue;
+main {
     text-align: center;
 }
 
-main {
-    background-color: skyblue;
-}
-
 button {
+    text-align: center;
     background-color: white;
     width: 200px;
     font-size: 16px;
@@ -27,7 +24,7 @@ button:hover {
 
 button:active {
     background-color: aqua;
-    box-shadow: 0 10% rgb(62, 62, 206);
+    box-shadow: 10% rgb(62, 62, 206);
     transform: translate(1%);
 }
 
@@ -48,6 +45,8 @@ button:active {
 
 
 body {
+    margin: auto;
+    background-color: skyblue;
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr; 
@@ -60,27 +59,10 @@ body {
     width: 100%;
     }
 
-
-@media  screen and (max-width: 500px) {
-    body {
-        font-size: 80%;
-    }
-
-    button {
-        background-color: white;
-        width: 150px;
-        font-size: 16px;
-        color: rgb(126, 164, 245);
-        padding: 8px 16px;
-        border-radius: 12px;
-        transition-duration: 0.5s;
-    }
-        
-    
-}
-
-@media  screen and (min-width: 501px) {
-           
+@media screen and (min-width:700px) {
    
- 
+    body {
+        font-size: 10px;
+        background-color: red;
+    }
 }
