@@ -11,17 +11,17 @@
 <script src="..\..\static\js\code.js"></script>
 
 <div class="mcontainer">
-    <form action="{{ url_for('root.index') }}">              
+    <form action="{{ url_for('profile.library', username = current_user.username) }}">              
         <button type="submit">My Library</button>
         <p></p>
     </form>
 
-    <form action="{{ url_for('root.index') }}">               
+    <form action="{{ url_for('profile.myaccount', username = current_user.username) }}">               
         <button type="submit">My Account</button>
         <p></p>
     </form>
 
-    <form action="{{ url_for('root.index') }}">               
+    <form action="{{ url_for('auth.logout') }}">               
         <button type="submit">Logout</button>
         <p></p>
         </form>

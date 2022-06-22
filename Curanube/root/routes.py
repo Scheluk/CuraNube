@@ -33,6 +33,7 @@ def show_users():
     #user = User.query.filter_by(id=1).first()
     #user.confirmed = True
     #user.password = generate_password_hash("admin")
-    User.query.filter(User.id > 1).delete()
-    db.session.commit()
+    
+    #User.query.filter(User.id > 1).delete()
+    #db.session.commit()
     return "Printed Users"

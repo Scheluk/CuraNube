@@ -1,4 +1,4 @@
-{% extends "userspace_template.html" %}
+{% extends "template.html" %}
 {% block headercontent %}
 
 <div>
@@ -22,11 +22,11 @@
         restore your Account!
     </p> <br>
 
-    <form action="{{ url_for('') }}">               <!--Insert rigth link-->
+    <form action="{{ url_for('auth.deleteuser') }}", method="delete">               <!--Insert rigth link-->
         <button type="submit">Delete!</button>
     </form>
 
-    <form action="{{ url_for('root.index') }}">                          
+    <form action="{{ url_for('profile.home', username = current_user.username) }}">                          
         <button type="submit">Home</button>
     </form>
 </div>

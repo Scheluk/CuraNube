@@ -27,15 +27,12 @@ def login():
         userjson = jsonify(
             credentials=request.form["username"],
             pw=request.form["password"]
-        ).get_json() 
-        print(userjson)
+        ).get_json()
         if "@" in userjson["credentials"]:
             user = User.query.filter_by(email=userjson["credentials"]).first()
         else:
             user = User.query.filter_by(username=userjson["credentials"]).first()
         
-        print(user.confirmed)
-        print(current_user)
         if user is None:
             error = "Incorrect Username/Email"
         elif not check_password_hash(user.password, userjson["pw"]):
@@ -80,18 +77,18 @@ def createaccount():
         error = valid_new_account(userjson)
         if error == None:
             user = User(id=freeUserId(), email=userjson["email"], username=userjson["username"], password=generate_password_hash(userjson["pw"]), confirmed=False)
+            user.confirmed = True #ONLY BECAUSE GOOGLE WONT LET US SEND VERIFICATION EMAILS!!!
             db.session.add(user)
             db.session.commit()
-            print(userjson["email"])
             token = generate_verification_token(userjson["email"])
-            print(token)
-                #verify_url = url_for("verify_email", token = token, _external=True)
-                #html = render_template("auth/email_account_verification.html", verify_url = verify_url)
-                #subject = "Please confirm your email"
-                #send_email(userjson["email"], subject, html)
+            verify_url = url_for("auth.verify_email", token = token, _external=True)
+            html = render_template("profile/activate.html", verify_url = verify_url)
+            subject = "Please confirm your email"
+            #NOT LONGER AVAILABLE AS OF 30th OF MAY, 2022
+            #send_email(userjson["email"], subject, html)
 
-                #error = "User or E-Mail already registered."
-            #else:
+            #login_user(user)
+
             return redirect(url_for("auth.accountcreated"))
         flash(error)
     return render_template("auth/createaccount.html", error = error)
@@ -124,21 +121,26 @@ def valid_new_account(userjson):
         return "Please use a different username."
     return None
 
-
+@bp.route("/deleteuser")
+@login_required
+def deleteuser():
+    db.session.delete(current_user)
+    db.session.commit()
+    return redirect(url_for("root.index"))
 
 @bp.route("/verify/<token>")
+#@login_required
 def verify_email(token):
     try:
         email = verify_token(token)
     except:
         print("Verification Link is invalid or has expired")
-    #db = get_db()
-    db.execute("SELECT verified FROM user WHERE email = (?)", (email,))
-    result = db.fetchone()
-    if result == True:
+    user = User.query.filter_by(email=email).first_or_404()
+    if user.confirmed:
         print("Account already verified, please login")
     else:
-        db.execute("UPDATE user SET verified = True WHERE email = (?)", (email,))
-        db.commit()
+        user.confirmed = True
+        db.session.add(user)
+        db.session.commit()
         print("You have been confirmed")
     return redirect(url_for("root.index"))
