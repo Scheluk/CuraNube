@@ -100,7 +100,6 @@ def createaccount():
 
 #function to dynamically assign user ids
 def freeUserId():
-    #print(User.__table__.c)
     last_index = 0
     for user in User.query.all():
         if user.id > last_index:
@@ -117,7 +116,7 @@ def freeUserId():
     return last_index+1     #if every id in the range is taken, return the biggest+1
 
 
-def valid_new_account(userjson):
+def valid_new_account(userjson):    #check if a user already has that email or username
     if User.query.filter_by(email=userjson["email"]).first() is not None:
         return "Please use a different email address."
     if User.query.filter_by(username=userjson["username"]).first() is not None:
@@ -126,7 +125,7 @@ def valid_new_account(userjson):
 
 @bp.route("/deleteuser")
 @login_required
-def deleteuser():
+def deleteuser():   #delete the current user from the database
     db.session.delete(current_user)
     db.session.commit()
     return redirect(url_for("root.index"))

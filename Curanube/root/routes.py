@@ -20,7 +20,7 @@ def about():
 
 @bp.route("/printusers")
 def show_users():
-    users = User.query.all()
+    users = User.query.all()    #get all users and print them
     for u in users:
         print("####################")
         print("ID:", u.id)
