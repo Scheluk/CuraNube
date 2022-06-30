@@ -7,7 +7,7 @@ function loadImpressum() {
     };
     xhttp.open("GET", "../../static/img/impressum.txt", true);
     xhttp.send();
-  }
+}
 
 function getTime() {
     const url = new URL("http://worldtimeapi.org/api/ip")
@@ -33,11 +33,6 @@ function getFact() {
         })
 }
 
-/*async function submitLogin(username, password) {
-    const response = await fetch.
-    const formData = new FormData(e.target)
-    const formProps = Object
-}*/
 
 
 
