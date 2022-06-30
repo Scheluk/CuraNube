@@ -2,8 +2,6 @@ import functools
 from Curanube import login, db
 from Curanube.models import User
 from Curanube.auth import bp
-from Curanube.auth.token import generate_verification_token, verify_token
-from Curanube.auth.email import send_email
 from flask import redirect, url_for, render_template, request, jsonify, g, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -77,20 +75,10 @@ def createaccount():
         error = valid_new_account(userjson) #validate if the data for the new user is valid (keine doppelgänger bezüglich username und email)
         if error == None:   
             #create a new user object
-            user = User(id=freeUserId(), email=userjson["email"], username=userjson["username"], password=generate_password_hash(userjson["pw"]), confirmed=False)
+            user = User(id=freeUserId(), email=userjson["email"], username=userjson["username"], password=generate_password_hash(userjson["pw"]), confirmed=True)
             user.confirmed = True #ONLY BECAUSE GOOGLE WONT LET US SEND VERIFICATION EMAILS!!!
             db.session.add(user)    #add the created user to the database
             db.session.commit() #commit changes to the database, to take effect
-            token = generate_verification_token(userjson["email"])  #generate a token from the newly created users email address
-            
-            #create the url that should be sent to the users registered email, so he can activate his account
-            verify_url = url_for("auth.verify_email", token = token, _external=True)    
-            html = render_template("profile/activate.html", verify_url = verify_url)    #content of the email
-            subject = "Please confirm your email"   #subject of the email
-            #NOT LONGER AVAILABLE AS OF 30th OF MAY, 2022
-            #send_email(userjson["email"], subject, html)
-
-            #login_user(user)
 
             return redirect(url_for("auth.accountcreated")) 
         flash(error)
@@ -123,26 +111,10 @@ def valid_new_account(userjson):    #check if a user already has that email or u
         return "Please use a different username."
     return None
 
+
 @bp.route("/deleteuser")
 @login_required
 def deleteuser():   #delete the current user from the database
     db.session.delete(current_user)
     db.session.commit()
-    return redirect(url_for("root.index"))
-
-@bp.route("/verify/<token>")
-#@login_required
-def verify_email(token):
-    try:
-        email = verify_token(token)
-    except:
-        print("Verification Link is invalid or has expired")
-    user = User.query.filter_by(email=email).first_or_404()
-    if user.confirmed:
-        print("Account already verified, please login")
-    else:
-        user.confirmed = True
-        db.session.add(user)
-        db.session.commit()
-        print("You have been confirmed")
     return redirect(url_for("root.index"))
