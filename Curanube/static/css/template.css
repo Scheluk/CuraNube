@@ -7,7 +7,7 @@ main {
     text-align: center;
 }
 
-button {
+#but{
     text-align: center;
     background-color: white;
     font-size: 16px;
@@ -17,12 +17,12 @@ button {
     border-radius: 12px;
     transition-duration: 0.5s;
 }
-button:hover { 
+#but:hover { 
     background-color: rgb(5, 203, 238);
     color: white;
 }
 
-button:active {
+#but:active {
     background-color: aqua;
     box-shadow: 10% rgb(62, 62, 206);
     transform: translate(1%);

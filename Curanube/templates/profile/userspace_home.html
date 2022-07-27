@@ -12,22 +12,22 @@
 
 <div class="mcontainer">
     <form action="{{ url_for('profile.library', username = current_user.username) }}">              
-        <button type="submit">My Library</button>
+        <button id="but" type="submit">My Library</button>
         <p></p>
     </form>
 
     <form action="{{ url_for('profile.myaccount', username = current_user.username) }}">               
-        <button type="submit">My Account</button>
+        <button id="but" type="submit">My Account</button>
         <p></p>
     </form>
 
     <form action="{{ url_for('auth.logout') }}">               
-        <button type="submit">Logout</button>
+        <button id="but" type="submit">Logout</button>
         <p></p>
         </form>
 </div>
 
-<button onClick="getFact()">Cat Fact</button><br>
+<button id="but" onClick="getFact()">Cat Fact</button><br>
       <span id="result">
     
 
