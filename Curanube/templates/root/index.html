@@ -11,6 +11,23 @@
 
 {% block maincontent %}
 
+<div class="topnav" id="myTopnav">
+  <form action="{{ url_for('auth.login') }}">
+      <button type="submit">Login</button>
+  </form>
+
+    <form action="{{ url_for('auth.createaccount') }}">
+      <button type="submit">Create Account</button>
+    </form>
+
+    <form action="{{ url_for('root.about') }}">
+      <button type="submit">About</button>
+    </form>
+
+    <form action="{{ url_for('root.show_users') }}">
+      <button type="submit">DEV: SHOW USERS</button>
+</div>
+
 <div>
   <div class="mcontainer">
      
@@ -34,6 +51,8 @@
         <button id="but" type="submit">DEV: SHOW USERS</button>
         <p></p>
       </form>
+
+      
 
   <!--
             <a href="{{ url_for('auth.login') }}"><input type="button" value="Login" id="loginbutton"></a> <br>
