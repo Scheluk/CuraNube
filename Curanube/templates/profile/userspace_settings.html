@@ -15,11 +15,11 @@
     </form>
 
     <form action="{{ url_for('profile.myaccount', username = current_user.username) }}">               
-        <button id="but" type="submit">My Account</button>
+        <button id="submit" type="submit">My Account</button>
     </form>
 
     <form action="{{ url_for('profile.home', username = current_user.username) }}">                          
-        <button id="but" type="submit">Home</button>
+        <button id="submit" type="submit">Home</button>
     </form>
 </div>
 

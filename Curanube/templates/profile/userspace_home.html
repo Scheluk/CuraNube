@@ -17,17 +17,17 @@
     </form>
 
     <form action="{{ url_for('profile.myaccount', username = current_user.username) }}">               
-        <button id="but" type="submit">My Account</button>
+        <button id="submit" type="submit">My Account</button>
         <p></p>
     </form>
 
     <form action="{{ url_for('auth.logout') }}">               
-        <button id="but" type="submit">Logout</button>
+        <button id="submit" type="submit">Logout</button>
         <p></p>
         </form>
 </div>
 
-<button id="but" onClick="getFact()">Cat Fact</button><br>
+<button id="catFact" onClick="getFact()">Cat Fact</button><br>
       <span id="result">
     
 

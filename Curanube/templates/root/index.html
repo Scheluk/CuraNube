@@ -7,11 +7,12 @@
   <p>Because sharing is caring</p>
 </div>
 
+
 {% endblock %}
 
 {% block maincontent %}
 
-<div class="topnav" id="myTopnav">
+<!-- <div class="topnav" id="myTopnav">
   <form action="{{ url_for('auth.login') }}">
       <button type="submit">Login</button>
   </form>
@@ -26,7 +27,7 @@
 
     <form action="{{ url_for('root.show_users') }}">
       <button type="submit">DEV: SHOW USERS</button>
-</div>
+</div> -->
 
 <div>
   <div class="mcontainer">
@@ -48,24 +49,25 @@
       </form>
 
       <form action="{{ url_for('root.show_users') }}">
-        <button id="but" type="submit">DEV: SHOW USERS</button>
+        <button id="show_users" type="submit">DEV: SHOW USERS</button>
         <p></p>
       </form>
 
       
 
   <!--
-            <a href="{{ url_for('auth.login') }}"><input type="button" value="Login" id="loginbutton"></a> <br>
-            <a href="{{ url_for('auth.login') }}"><input type="button" value="Create Account" id="createaccountbutton"></a> <br> 
-            <a href="{{ url_for('root.about') }}"><input type="button" value="About" id="aboutbutton"></a>
-  -->   
+
+  -->
+  
+      
+     
  
   </div>
 </div>
 
 <div id="impressum">
   <h2>Impressum</h2>
-  <button id="but" type="button" onclick="loadImpressum()">Show impressum</button>
+  <button id="loadImpressum" type="button" onclick="loadImpressum()">Show impressum</button>
 </div>
 {% endblock %}
 

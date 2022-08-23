@@ -24,13 +24,18 @@
       </header>
   </head>
 
-    <main>         
+    <main>
+      <ul id="meineBar">
+        <a href="{{ url_for('auth.login') }}">Login</a>
+        <a href="{{ url_for('auth.login') }}">Create Account</a>
+        <a href="{{ url_for('root.about') }}">About</a>
+        </ul>           
       <body>
         <p></p>
-        <button id="but" onClick="getTime()">Time</button><br>
+        <button id="timeButton" onClick="getTime()">Time</button><br>
         <p></p>
       </body>
-        
+    
         {% block maincontent %}
         {% endblock %}
   
