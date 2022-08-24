@@ -25,10 +25,12 @@
   </head>
 
     <main>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
       <ul id="meineBar">
-        <a href="{{ url_for('auth.login') }}">Login</a>
-        <a href="{{ url_for('auth.login') }}">Create Account</a>
-        <a href="{{ url_for('root.about') }}">About</a>
+        <a href="{{ url_for('auth.login') }}" class="active">Login</a>
+        <a href="{{ url_for('auth.createaccount')}}" class="active">Create Account</a>
+        <a href="{{ url_for('root.about') }}" class="active">About</a>
         </ul>           
       <body>
         <p></p>
