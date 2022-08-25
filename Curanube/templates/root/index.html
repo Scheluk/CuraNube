@@ -6,28 +6,23 @@
   <h1>Welcome to CuraNube</h1>
   <p>Because sharing is caring</p>
 </div>
-
+<div class="topnav">
+  <a href="{{ url_for('root.index') }}" class="active">CuraNube</a>
+  <div id="meineBar">
+    <a href="{{ url_for('auth.login') }}" class="active">Login</a>
+    <a href="{{ url_for('auth.createaccount')}}" class="active">Create Account</a>
+    <a href="{{ url_for('root.about') }}" class="active">About</a>
+  </div>   
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
 
 {% endblock %}
 
 {% block maincontent %}
 
-<!-- <div class="topnav" id="myTopnav">
-  <form action="{{ url_for('auth.login') }}">
-      <button type="submit">Login</button>
-  </form>
-
-    <form action="{{ url_for('auth.createaccount') }}">
-      <button type="submit">Create Account</button>
-    </form>
-
-    <form action="{{ url_for('root.about') }}">
-      <button type="submit">About</button>
-    </form>
-
-    <form action="{{ url_for('root.show_users') }}">
-      <button type="submit">DEV: SHOW USERS</button>
-</div> -->
+<!-- -->
 
 <div>
   <div class="mcontainer">

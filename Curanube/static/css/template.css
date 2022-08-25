@@ -81,7 +81,7 @@ body {
 
 /* Style the hamburger menu */
 .topnav a.icon {
-  background: black;
+  background: rgb(4, 83, 156);
   display: block;
   position: absolute;
   right: 0;
@@ -96,8 +96,9 @@ body {
 
 /* Style the active link (or home/logo) */
 .active {
-  background-color: #04AA6D;
+  background-color: rgb(4, 83, 156);
   color: white;
+
 }
 
 @media screen and (max-width: 699px) {
@@ -114,10 +115,13 @@ body {
    
     body {
         font-size: 30px;
-        background-color: rgb(51, 48, 228);
+        background-color: rgb(5, 128, 244);
     }
 
     #but {
+      display: none;
+    }
+    .mcontainer {
       display: none;
     }
     

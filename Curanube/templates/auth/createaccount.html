@@ -10,6 +10,17 @@
     the creation of your account.</p>
 </div>
 
+<div class="topnav">
+  <a href="{{ url_for('root.index') }}" class="active">CuraNube</a>
+  <div id="meineBar">
+    <a href="{{ url_for('auth.login') }}" class="active">Login</a>
+    <a href="{{ url_for('auth.createaccount')}}" class="active">Create Account</a>
+    <a href="{{ url_for('root.about') }}" class="active">About</a>
+  </div>   
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
 
 {% endblock %}
 

@@ -5,6 +5,18 @@
     <div><h1>Welcome, {{ current_user.username }}</h1></div>
 </div>
 
+<div class="topnav">
+    <a href="{{ url_for('profile.home', username = current_user.username) }}" class="active">User Home</a>
+    <div id="meineBar">
+      <a href="{{ url_for('profile.library', username = current_user.username) }}" class="active">My Library</a>
+      <a href="{{ url_for('profile.myaccount', username = current_user.username) }}" class="active">My Account</a>
+      <a href="{{ url_for('auth.logout') }}" class="active">Logout</a>
+    </div>   
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
 {% endblock %}
 
 {% block maincontent %}
@@ -20,6 +32,7 @@
 
     <form action="{{ url_for('profile.delete_account', username = current_user.username) }}">               <!--Insert rigth link-->           
         <button id="submit" type="submit">Delete Account</button>
+        <p></p>
     </form>
 
     <form action="{{ url_for('profile.home', username = current_user.username) }}">                         
