@@ -21,17 +21,20 @@
 
 {% block maincontent %}
 
-<div class="mcontainer">
+<div class="ccontainer">
     <form action="{{ url_for('profile.home', username = current_user.username) }}">               <!--Insert rigth link-->
-        <button id="but" type="submit">Change Picture</button>
+        <button type="submit">Change Picture</button>
+        <p></p>
     </form>
 
     <form action="{{ url_for('profile.myaccount', username = current_user.username) }}">               
-        <button id="submit" type="submit">My Account</button>
+        <button class="mcontainer" type="submit">My Account</button>
+        <p></p>
     </form>
 
     <form action="{{ url_for('profile.home', username = current_user.username) }}">                          
-        <button id="submit" type="submit">Home</button>
+        <button class="mcontainer" type="submit">Home</button>
+        <p></p>
     </form>
 </div>
 

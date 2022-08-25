@@ -20,7 +20,6 @@
 {% endblock %}
 
 {% block maincontent %}
-<script src="..\..\static\js\code.js"></script>
 
 <div class="mcontainer">
     <form action="{{ url_for('profile.library', username = current_user.username) }}">              
@@ -29,12 +28,12 @@
     </form>
 
     <form action="{{ url_for('profile.myaccount', username = current_user.username) }}">               
-        <button id="submit" type="submit">My Account</button>
+        <button type="submit">My Account</button>
         <p></p>
     </form>
 
     <form action="{{ url_for('auth.logout') }}">               
-        <button id="submit" type="submit">Logout</button>
+        <button type="submit">Logout</button>
         <p></p>
         </form>
 </div>
