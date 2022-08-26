@@ -2,7 +2,7 @@
 {% block headercontent %}
 
 <div>
-    <div><h1>Welcome, {{ current_user.username }}</h1></div>
+    <div><h1>Library from {{ current_user.username }}</h1></div>
 </div>
 <div class="topnav">
     <a href="{{ url_for('profile.home', username = current_user.username) }}" class="active">User Home</a>

@@ -118,7 +118,7 @@ body {
         background-color: rgb(5, 128, 244);
     }
 
-    #but {
+    .mobile {
       display: none;
     }
     .mcontainer {

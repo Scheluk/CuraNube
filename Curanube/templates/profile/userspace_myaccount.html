@@ -2,7 +2,7 @@
 {% block headercontent %}
 
 <div>
-    <div><h1>Welcome, {{ current_user.username }}</h1></div>
+    <div><h1>Account from {{ current_user.username }}</h1></div>
 </div>
 
 <div class="topnav">
@@ -24,10 +24,12 @@
 <div class="ccontainer">
     <form action="{{ url_for('profile.settings', username = current_user.username) }}">               <!--Insert rigth link-->
         <button type="submit">Settings</button>
+        <p></p>
     </form>
 
     <form action="{{ url_for('auth.logout') }}">               
-        <button id="but" type="submit">Logout</button>
+        <button class="mobile" type="submit">Logout</button>
+        <p></p>
     </form>
 
     <form action="{{ url_for('profile.delete_account', username = current_user.username) }}">               <!--Insert rigth link-->           
@@ -36,7 +38,7 @@
     </form>
 
     <form action="{{ url_for('profile.home', username = current_user.username) }}">                         
-        <button id="but" type="submit">Home</button>
+        <button class="mobile" type="submit">Home</button>
     </form>
 </div>
 

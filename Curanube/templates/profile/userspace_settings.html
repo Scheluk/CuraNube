@@ -2,7 +2,7 @@
 {% block headercontent %}
 
 <div>
-    <div><h1>Welcome, {{ current_user.username }}</h1></div>
+    <div><h1>Settings from {{ current_user.username }}</h1></div>
 </div>
 
 <div class="topnav">
@@ -28,12 +28,12 @@
     </form>
 
     <form action="{{ url_for('profile.myaccount', username = current_user.username) }}">               
-        <button class="mcontainer" type="submit">My Account</button>
+        <button class="mobile" type="submit">My Account</button>
         <p></p>
     </form>
 
     <form action="{{ url_for('profile.home', username = current_user.username) }}">                          
-        <button class="mcontainer" type="submit">Home</button>
+        <button class="mobile" type="submit">Home</button>
         <p></p>
     </form>
 </div>
