@@ -1,6 +1,7 @@
 from Curanube.auth.routes import login_required
 from Curanube.profile import bp
-from flask import render_template
+from Curanube.models import User
+from flask import render_template, request
 from flask_login import login_required, current_user
 
 @bp.route("/<username>/home")
@@ -30,6 +31,29 @@ def myaccount(username):
 @login_required
 def settings(username):
     return render_template("profile/userspace_settings.html", username = current_user.username)
+
+
+@bp.route("/<username>/change_username", methods=["PUT", "GET"])
+@login_required
+def change_username(username):
+    error = None    #error message
+    if request.method == "PUT":
+        print(request.method)
+        data = request.get_json()
+        print(data)
+        #user = User.query.get_or_404(username)
+        print("query successful")
+        #user.update_from_json(request.json)
+        print("PUT WORKS")
+        return render_template("profile/userspace_settings.html", username = current_user.username)
+    return render_template("profile/userspace_change_username.html", username = current_user.username)
+
+
+
+@bp.route("/<username>/change_password")
+@login_required
+def change_password(username):
+    return render_template("profile/userspace_change_password.html", username = current_user.username)
 
 
 

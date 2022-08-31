@@ -33,6 +33,25 @@ function getFact() {
         })
 
 }
+
+function changeUsername() {
+  const formData = new FormData();
+  formData.append("username", document.getElementById("newUsername").value);
+  const data = Object.fromEntries(formData.entries())
+  fetch("change_username", {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data),
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("Success:", data);
+  })
+  .catch((error) => {
+    console.log("Error:", error);
+  })
+}
+
 /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
 function myFunction() {
     var x = document.getElementById("meineBar");

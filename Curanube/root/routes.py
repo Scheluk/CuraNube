@@ -36,4 +36,4 @@ def show_users():
     
     #User.query.filter(User.id > 1).delete()
     #db.session.commit()
-    return "Printed Users"
+    return render_template("root/index.html")

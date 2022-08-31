@@ -1,0 +1,45 @@
+{% extends "template.html" %}
+{% block headercontent %}
+
+<div>
+    <div><h1>Change Username for {{ current_user.username }}</h1></div>
+</div>
+
+<div class="topnav">
+    <a href="{{ url_for('profile.home', username = current_user.username) }}" class="active">User Home</a>
+    <div id="meineBar">
+      <a href="{{ url_for('profile.library', username = current_user.username) }}" class="active">My Library</a>
+      <a href="{{ url_for('profile.myaccount', username = current_user.username) }}" class="active">My Account</a>
+      <a href="{{ url_for('auth.logout') }}" class="active">Logout</a>
+    </div>   
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+
+{% endblock %}
+
+{% block maincontent %}
+
+<div class="ccontainer">
+
+    
+
+    <form action="{{ url_for('profile.settings', username = current_user.username) }}">
+        <div class="form-field">
+            <label for="newUsername">New Username</label>
+            <input id="newUsername" name="newUsername" type="text" required><br><br>
+        </div>
+        <div class="form-field">
+            <button onClick="changeUsername()" type="submit">Change Username</button>
+        </div>
+        
+    </form>
+
+    <form action="{{ url_for('profile.settings', username = current_user.username) }}">
+        <button type="submit">Back to Settings</button>
+        <p></p>
+    </form>
+</div>
+
+{% endblock %}

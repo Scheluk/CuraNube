@@ -2,7 +2,6 @@ import os
 from flask import Flask, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_mail import Mail
 from config import Config
 
 
@@ -10,7 +9,6 @@ from config import Config
 db = SQLAlchemy()
 login = LoginManager()
 login.login_view = "auth.login"     #the login view to redirect when a client tries to access a page that needs a logged in user
-mail = Mail()
 
 #factory pattern for app
 def create_app(config_class=Config):
@@ -21,7 +19,6 @@ def create_app(config_class=Config):
     #initialize all static server elements
     db.init_app(app)
     login.init_app(app)
-    mail.init_app(app)
 
     from Curanube.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix="/auth")
