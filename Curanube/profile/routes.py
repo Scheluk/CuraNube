@@ -1,3 +1,4 @@
+from Curanube import db
 from Curanube.auth.routes import login_required
 from Curanube.profile import bp
 from Curanube.models import User
@@ -41,9 +42,14 @@ def change_username(username):
         print(request.method)
         data = request.get_json()
         print(data)
-        #user = User.query.get_or_404(username)
+        user = User.query.get_or_404(current_user.id)
         print("query successful")
-        #user.update_from_json(request.json)
+        print(user.id)
+        print(user.username)
+        user.username = data["username"]
+        print(user.username)
+        db.session.commit()
+        #user2.update_from_json(data)
         print("PUT WORKS")
         return render_template("profile/userspace_settings.html", username = current_user.username)
     return render_template("profile/userspace_change_username.html", username = current_user.username)

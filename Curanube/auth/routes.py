@@ -112,7 +112,7 @@ def valid_new_account(userjson):    #check if a user already has that email or u
     return None
 
 
-@bp.route("/deleteuser")
+@bp.route("/deleteuser", methods=["DELETE"])
 @login_required
 def deleteuser():   #delete the current user from the database
     db.session.delete(current_user)

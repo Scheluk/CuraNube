@@ -26,6 +26,10 @@
     
 
     <form action="{{ url_for('profile.settings', username = current_user.username) }}">
+        <div><p>
+            If you want to change your username, please enter it in the textfield below.
+            It will change as soon as you reload the page.
+        </p></div>
         <div class="form-field">
             <label for="newUsername">New Username</label>
             <input id="newUsername" name="newUsername" type="text" required><br><br>
