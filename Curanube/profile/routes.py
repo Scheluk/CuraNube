@@ -1,9 +1,11 @@
 from Curanube import db
+from Curanube import profile
 from Curanube.auth.routes import login_required
 from Curanube.profile import bp
 from Curanube.models import User
-from flask import render_template, request
-from flask_login import login_required, current_user
+from flask import render_template, request, flash, redirect, url_for, abort, jsonify
+from flask_login import login_required, current_user, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 @bp.route("/<username>/home")
 #login is required, so if no user is currently logged in (current_user = None), redirect to auth.login,
@@ -39,31 +41,71 @@ def settings(username):
 def change_username(username):
     error = None    #error message
     if request.method == "PUT":
-        print(request.method)
         data = request.get_json()
         print(data)
         user = User.query.get_or_404(current_user.id)
         print("query successful")
         print(user.id)
         print(user.username)
-        user.username = data["username"]
-        print(user.username)
-        db.session.commit()
-        #user2.update_from_json(data)
-        print("PUT WORKS")
-        return render_template("profile/userspace_settings.html", username = current_user.username)
+        print(data["newUsername"])
+        username_taken = (User.query.filter_by(username=data["newUsername"]).first() != None)
+        if username == data["newUsername"]:
+            print("New Username is same as Old Username")
+            abort(403)
+        elif username_taken:
+            print("Username already taken")
+            abort(403)
+        else:
+            user.username = data["newUsername"]
+            print(user.username)
+            db.session.commit()
+            print("PUT WORKS")
+            return render_template("profile/userspace_settings.html", username = user.username)
     return render_template("profile/userspace_change_username.html", username = current_user.username)
 
 
 
-@bp.route("/<username>/change_password")
+@bp.route("/<username>/change_password", methods=["PUT", "GET"])
 @login_required
 def change_password(username):
+    if request.method == "PUT":
+        print(request.method)
+        data = request.get_json()
+        print(data)
+        user = User.query.get_or_404(current_user.id)
+        print("query successful")
+        if check_password_hash(user.password, data["oldPassword"]) == False:
+            print("Wrong Password")
+            abort(403)
+        elif data["newPassword"] != data["confPassword"]:
+            print("Passwords do not match")
+            abort(403)
+        elif data["oldPassword"] == data["newPassword"]:
+            print("New Password is same as Old Password")
+            abort(403)
+        else:
+            print(user.password)
+            print(data["oldPassword"])
+            #user.username = data["password"]
+            #print(user.username)
+            #db.session.commit()
+            print("PUT WORKS")
+            return jsonify()
+            return render_template("profile/userspace_settings.html", username = current_user.username)
+            return redirect(url_for("profile.settings", username = current_user.username))
     return render_template("profile/userspace_change_password.html", username = current_user.username)
 
 
 
-@bp.route("/<username>/delete_account")
+@bp.route("/<username>/delete_account", methods=["GET", "DELETE"])
 @login_required
 def delete_account(username):
-    return render_template("profile/userspace_deleteaccount.html", username = current_user.username)
+    if request.method == "DELETE":
+        print("DELETE WORKS")
+        userToDelete = User.query.get_or_404(current_user.id)
+        logout_user()
+        db.session.delete(userToDelete)    #delete the user from the database
+        db.session.commit()
+        return render_template("root/index.html")
+    else:
+        return render_template("profile/userspace_deleteaccount.html", username = current_user.username)

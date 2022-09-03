@@ -34,9 +34,7 @@
         restore your Account!
     </p> <br>
 
-    <form action="{{ url_for('auth.deleteuser') }}", method="delete">               <!--Insert rigth link-->
-        <button type="submit">Delete!</button>
-    </form>
+    <button onClick="deleteAccount()" type="submit">Delete!</button>
 
     <form action="{{ url_for('profile.home', username = current_user.username) }}">                          
         <button type="submit">Home</button>

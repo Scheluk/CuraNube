@@ -36,7 +36,7 @@ function getFact() {
 
 function changeUsername() {
   const formData = new FormData();
-  formData.append("username", document.getElementById("newUsername").value);
+  formData.append("newUsername", document.getElementById("newUsername").value);
   const data = Object.fromEntries(formData.entries())
   fetch("change_username", {
     method: "PUT",
@@ -50,6 +50,31 @@ function changeUsername() {
   .catch((error) => {
     console.log("Error:", error);
   })
+}
+
+function changePassword() {
+  const formData = new FormData();
+  oldPWD = document.getElementById("old_password").value;
+  newPWD = document.getElementById("new_password").value;
+  confPWD = document.getElementById("confirm_password").value;
+  formData.append("oldPassword", oldPWD);
+  formData.append("newPassword", newPWD);
+  formData.append("confPassword", confPWD);
+  const data = Object.fromEntries(formData.entries())
+  fetch("change_password", {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data),
+  })
+}
+
+function deleteAccount() {
+  fetch("delete_account", {
+    method: "DELETE",
+    headers: {"Content-Type": "application/json"},
+  }).then(
+    location.reload()
+  );
 }
 
 /* Toggle between showing and hiding the navigation menu links when the user clicks on the hamburger menu / bar icon */
