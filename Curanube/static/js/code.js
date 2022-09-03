@@ -36,19 +36,13 @@ function getFact() {
 
 function changeUsername() {
   const formData = new FormData();
-  formData.append("newUsername", document.getElementById("newUsername").value);
+  let newUsername = document.getElementById("newUsername").value
+  formData.append("newUsername", newUsername);
   const data = Object.fromEntries(formData.entries())
   fetch("change_username", {
     method: "PUT",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data),
-  })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log("Success:", data);
-  })
-  .catch((error) => {
-    console.log("Error:", error);
   })
 }
 
@@ -65,7 +59,7 @@ function changePassword() {
     method: "PUT",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data),
-  })
+  }).catch(response.status)
 }
 
 function deleteAccount() {

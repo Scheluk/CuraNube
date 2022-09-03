@@ -34,6 +34,6 @@ def show_users():
     #user.confirmed = True
     #user.password = generate_password_hash("admin")
     
-    #User.query.filter(User.id > 1).delete()
+    #User.query.filter(User.id > 2).delete()
     #db.session.commit()
     return render_template("root/index.html")

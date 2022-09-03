@@ -7,7 +7,7 @@ from flask import render_template, request, flash, redirect, url_for, abort, jso
 from flask_login import login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
-@bp.route("/<username>/home")
+@bp.route("/<username>/home", methods=["GET", "PUT"])
 #login is required, so if no user is currently logged in (current_user = None), redirect to auth.login,
 #and after login, redirect to the page that the user wanted to access before
 @login_required     
@@ -57,6 +57,7 @@ def change_username(username):
             abort(403)
         else:
             user.username = data["newUsername"]
+            #current_user.username = user.username
             print(user.username)
             db.session.commit()
             print("PUT WORKS")
@@ -68,6 +69,7 @@ def change_username(username):
 @bp.route("/<username>/change_password", methods=["PUT", "GET"])
 @login_required
 def change_password(username):
+    message = ""
     if request.method == "PUT":
         print(request.method)
         data = request.get_json()
@@ -76,23 +78,24 @@ def change_password(username):
         print("query successful")
         if check_password_hash(user.password, data["oldPassword"]) == False:
             print("Wrong Password")
+            message = "Wrong Password"
             abort(403)
         elif data["newPassword"] != data["confPassword"]:
             print("Passwords do not match")
+            message = "Passwords do not match"
             abort(403)
         elif data["oldPassword"] == data["newPassword"]:
             print("New Password is same as Old Password")
+            message = "New password is same as old Password"
             abort(403)
-        else:
+        elif message == "":
             print(user.password)
             print(data["oldPassword"])
-            #user.username = data["password"]
-            #print(user.username)
-            #db.session.commit()
-            print("PUT WORKS")
-            return jsonify()
-            return render_template("profile/userspace_settings.html", username = current_user.username)
-            return redirect(url_for("profile.settings", username = current_user.username))
+            user.password = generate_password_hash(data["newPassword"])
+            db.session.commit()
+            message = "Password changed"
+            return redirect(url_for("profile.home", username=current_user.username))
+        flash(message)
     return render_template("profile/userspace_change_password.html", username = current_user.username)
 
 
