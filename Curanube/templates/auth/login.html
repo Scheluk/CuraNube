@@ -34,17 +34,17 @@
         {% endwith %}
         <div class="form-field">
             <label for="username">Username</label>
-            <input id="form-field" name="username" type="text" required>
+            <input id="login-username" name="username" type="text" required>
         </div>
             <div class="form-field">
             <label for="password">Password</label>
-            <input id="form-field" name="password" type="password" required >
+            <input id="login-pw" name="password" type="password" required >
         </div>
         <div class="form-field">
-            <input id="form-field" type="checkbox" name="remember_me">Remember me
+            <input id="login-checkbox" type="checkbox" name="remember_me">Remember me
         </div>
         <div class="form-field">
-            <input id="form-field" type="submit" value="submit">
+            <input id="login-submit" type="submit" value="login">
         </div>
         <div>
             <a href="{{ url_for('auth.createaccount') }}">Create an Account</a>
@@ -56,7 +56,7 @@
      
     <form action="{{ url_for('root.index') }}">
         <p></p>
-        <button id="submit" type="submit">Home</button>
+        <button id="login-home" type="submit">Home</button>
     </form>
     
 </div>

@@ -40,15 +40,15 @@
         {% endwith %}
     <div class="form-field">
       <label for="email">E-Mail</label>
-      <input id="form-field" name="email" type="email" required><br><br>
+      <input id="mail-form" name="email" type="email" required><br><br>
     </div>  
     <div class="form-field">
       <label for="username">Username</label>
-      <input id="form-field" name="username" type="text" required><br><br>
+      <input id="username-form" name="username" type="text" required><br><br>
     </div>
       <div class="form-field">
       <label for="password">Password</label>
-      <input id="form-field" name="password" type="password" required><br><br>
+      <input id="pw-form" name="password" type="password" required><br><br>
     </div>
     <div class="form-field">
       <p></p>
@@ -59,7 +59,7 @@
 
   <form action="{{ url_for('root.index') }}">
     <p></p>
-    <button id="submit" type="submit">Home</button>
+    <button id="home" type="submit">Home</button>
   </form>
   
 </div>
